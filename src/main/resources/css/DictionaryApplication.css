@@ -14,19 +14,28 @@
 .dict-left-container {
     -fx-background-color: #99f3bd;
     -fx-background-radius: 0 0 0 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0.2, 6, 0);
 }
 
 
 
-.dict-menu-item * {
+.dict-left-menu-icon {
     -fx-fill: #3e030b;
 }
 
-.dict-menu-button {
+.dict-left-menu-item:hover {
+    -fx-background-color: rgb(60, 186, 120);
+}
+
+.dict-left-menu-button {
     -fx-alignment: center-left;
     -fx-padding: 0 0 0 60;
 }
 
 .dict-menu-icon {
 
+}
+
+.dict-title-bar-icon:hover {
+    -fx-opacity: 0.6;
 }

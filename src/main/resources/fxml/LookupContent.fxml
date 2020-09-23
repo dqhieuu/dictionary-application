@@ -4,7 +4,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
             prefWidth="549.0" xmlns="http://javafx.com/javafx/8.0.171">
@@ -12,7 +12,7 @@
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <center>
             <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <ListView prefHeight="305.0" prefWidth="180.0"/>
+               <ListView prefWidth="180.0" />
             </ScrollPane>
          </center>
          <top>
@@ -20,4 +20,13 @@
          </top>
       </BorderPane>
    </left>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <left>
+            <ScrollPane prefHeight="361.0" prefWidth="341.0" BorderPane.alignment="CENTER">
+               <VBox prefWidth="300.0"/>
+            </ScrollPane>
+         </left>
+      </BorderPane>
+   </center>
 </BorderPane>

@@ -4,8 +4,6 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -16,53 +14,53 @@
    <left>
       <AnchorPane fx:id="leftMenuContainer" onMouseEntered="#setLeftMenuSizeOnMouseEnter" onMouseExited="#setLeftMenuSizeOnMouseLeave" styleClass="dict-left-container" BorderPane.alignment="CENTER">
          <VBox fx:id="leftMenuVBox" prefHeight="300.0" prefWidth="50.0">
-            <StackPane alignment="CENTER_LEFT" styleClass="menu-item-alt">
-               <FontAwesomeIconView glyphName="BOOK" size="25.0" styleClass="dict-menu-icon">
+            <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
+               <FontAwesomeIconView glyphName="BOOK" size="25.0" styleClass="dict-left-menu-icon">
                   <StackPane.margin>
                      <Insets left="10.0" />
                   </StackPane.margin>
                </FontAwesomeIconView>
-               <JFXButton fx:id="menuButtonLookUp" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-menu-button" text="Từ điển" />
+               <JFXButton fx:id="menuButtonLookUp" minWidth="0.0" onMouseClicked="#loadLookUpContent" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Từ điển" />
             </StackPane>
-            <StackPane alignment="CENTER_LEFT" styleClass="menu-item-alt">
-               <FontAwesomeIconView glyphName="HISTORY" size="25.0" styleClass="dict-menu-icon">
+            <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
+               <FontAwesomeIconView glyphName="HISTORY" size="25.0" styleClass="dict-left-menu-icon">
                   <StackPane.margin>
                      <Insets left="10.0" />
                   </StackPane.margin>
                </FontAwesomeIconView>
-               <JFXButton fx:id="menuButtonHistory" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-menu-button" text="Lịch sử" />
+               <JFXButton fx:id="menuButtonHistory" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Lịch sử" />
             </StackPane>
-            <StackPane alignment="CENTER_LEFT" styleClass="menu-item-alt">
-               <FontAwesomeIconView glyphName="STAR" size="25.0" styleClass="dict-menu-icon">
+            <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
+               <FontAwesomeIconView glyphName="STAR" size="25.0" styleClass="dict-left-menu-icon">
                   <StackPane.margin>
                      <Insets left="10.0" />
                   </StackPane.margin>
                </FontAwesomeIconView>
-               <JFXButton fx:id="menuButtonFavorites" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-menu-button" text="Mục ưa thích" />
+               <JFXButton fx:id="menuButtonFavorites" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Mục ưa thích" />
             </StackPane>
-            <StackPane alignment="CENTER_LEFT" styleClass="menu-item-alt">
-               <FontAwesomeIconView glyphName="LANGUAGE" size="25.0" styleClass="dict-menu-icon">
+            <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
+               <FontAwesomeIconView glyphName="LANGUAGE" size="25.0" styleClass="dict-left-menu-icon">
                   <StackPane.margin>
                      <Insets left="10.0" />
                   </StackPane.margin>
                </FontAwesomeIconView>
-               <JFXButton fx:id="menuButtonParaTrans" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-menu-button" text="Dịch văn bản" />
+               <JFXButton fx:id="menuButtonParaTrans" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Dịch văn bản" />
             </StackPane>
-            <StackPane alignment="CENTER_LEFT" styleClass="menu-item-alt">
-               <FontAwesomeIconView glyphName="DATABASE" size="25.0" styleClass="dict-menu-icon">
+            <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
+               <FontAwesomeIconView glyphName="DATABASE" size="25.0" styleClass="dict-left-menu-icon">
                   <StackPane.margin>
                      <Insets left="10.0" />
                   </StackPane.margin>
                </FontAwesomeIconView>
-               <JFXButton fx:id="menuButtonDictMan" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-menu-button" text="Quản lý từ điển" />
+               <JFXButton fx:id="menuButtonDictMan" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Quản lý từ điển" />
             </StackPane>
-            <StackPane alignment="CENTER_LEFT" styleClass="menu-item-alt">
-               <FontAwesomeIconView glyphName="COGS" size="25.0" styleClass="dict-menu-icon">
+            <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
+               <FontAwesomeIconView glyphName="COGS" size="25.0" styleClass="dict-left-menu-icon">
                   <StackPane.margin>
                      <Insets left="10.0" />
                   </StackPane.margin>
                </FontAwesomeIconView>
-               <JFXButton fx:id="menuButtonSettings" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-menu-button" text="Cài đặt chung">
+               <JFXButton fx:id="menuButtonSettings" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Cài đặt chung">
                   <StackPane.margin>
                      <Insets />
                   </StackPane.margin>
@@ -83,46 +81,21 @@
                </BorderPane.margin>
                <BorderPane prefHeight="200.0" prefWidth="200.0">
                   <center>
-                     <MaterialDesignIconView glyphName="WINDOW_MINIMIZE" size="20.0" styleClass="title-bar-icon" BorderPane.alignment="CENTER" />
+                     <MaterialDesignIconView glyphName="WINDOW_MINIMIZE" onMouseClicked="#minimizeApplication" size="20.0" styleClass="dict-title-bar-icon" BorderPane.alignment="CENTER" />
                   </center>
                </BorderPane>
                <BorderPane prefHeight="200.0" prefWidth="200.0">
                   <center>
-                     <MaterialDesignIconView glyphName="WINDOW_MAXIMIZE" size="20.0" styleClass="title-bar-icon" BorderPane.alignment="CENTER" />
+                     <MaterialDesignIconView glyphName="WINDOW_MAXIMIZE" onMouseClicked="#restoreOrMaximizeApplication" size="20.0" styleClass="dict-title-bar-icon" BorderPane.alignment="CENTER" />
                   </center>
                </BorderPane>
                <BorderPane prefHeight="200.0" prefWidth="200.0">
                   <center>
-                     <MaterialDesignIconView glyphName="WINDOW_CLOSE" size="20.0" styleClass="title-bar-icon" BorderPane.alignment="CENTER" />
+                     <MaterialDesignIconView glyphName="WINDOW_CLOSE" onMouseClicked="#closeApplication" size="20.0" styleClass="dict-title-bar-icon" BorderPane.alignment="CENTER" />
                   </center>
                </BorderPane>
             </HBox>
          </right>
       </BorderPane>
    </top>
-   <center>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <VBox prefHeight="483.0" prefWidth="573.0">
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-            <Label text="Label"/>
-         </VBox>
-      </ScrollPane>
-   </center>
 </BorderPane>
