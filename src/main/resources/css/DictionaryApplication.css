@@ -1,0 +1,32 @@
+.dict-top-bar {
+    -fx-background-color: #28df99;
+    -fx-background-radius: 15 15 0 0;
+}
+
+.dict-primary-container {
+    -fx-background-radius: 20 20 15 15;
+}
+
+.dict-title-bar-icon {
+    -fx-fill: white;
+}
+
+.dict-left-container {
+    -fx-background-color: #99f3bd;
+    -fx-background-radius: 0 0 0 15;
+}
+
+
+
+.dict-menu-item * {
+    -fx-fill: #3e030b;
+}
+
+.dict-menu-button {
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 60;
+}
+
+.dict-menu-icon {
+
+}
