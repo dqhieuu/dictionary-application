@@ -23,7 +23,7 @@ public class DictionaryController {
 
   @FXML private VBox leftMenuVBox;
 
-  @FXML private JFXButton menuButtonLookUp;
+  @FXML private JFXButton menuButtonLookup;
 
   @FXML private JFXButton menuButtonHistory;
 
@@ -37,7 +37,7 @@ public class DictionaryController {
 
   @FXML
   private void setLeftMenuSizeOnMouseEnter() {
-    menuButtonLookUp.setMinWidth(Region.USE_COMPUTED_SIZE);
+    menuButtonLookup.setMinWidth(Region.USE_COMPUTED_SIZE);
     menuButtonHistory.setMinWidth(Region.USE_COMPUTED_SIZE);
     menuButtonFavorites.setMinWidth(Region.USE_COMPUTED_SIZE);
     menuButtonParaTrans.setMinWidth(Region.USE_COMPUTED_SIZE);
@@ -54,7 +54,7 @@ public class DictionaryController {
 
   @FXML
   private void setLeftMenuSizeOnMouseLeave() {
-    menuButtonLookUp.setMinWidth(0);
+    menuButtonLookup.setMinWidth(0);
     menuButtonHistory.setMinWidth(0);
     menuButtonFavorites.setMinWidth(0);
     menuButtonParaTrans.setMinWidth(0);
@@ -70,7 +70,7 @@ public class DictionaryController {
   }
 
   @FXML
-  private void loadLookUpContent() throws IOException {
+  private void loadLookupContent() throws IOException {
     Parent scene = FXMLLoader.load(getClass().getResource("/fxml/LookupContent.fxml"));
     mainContainer.setCenter(scene);
   }

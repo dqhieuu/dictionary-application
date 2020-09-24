@@ -20,7 +20,7 @@
                      <Insets left="10.0" />
                   </StackPane.margin>
                </FontAwesomeIconView>
-               <JFXButton fx:id="menuButtonLookUp" minWidth="0.0" onMouseClicked="#loadLookUpContent" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Từ điển" />
+               <JFXButton fx:id="menuButtonLookup" minWidth="0.0" onMouseClicked="#loadLookupContent" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Từ điển" />
             </StackPane>
             <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
                <FontAwesomeIconView glyphName="HISTORY" size="25.0" styleClass="dict-left-menu-icon">
