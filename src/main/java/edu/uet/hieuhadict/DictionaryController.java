@@ -1,3 +1,5 @@
+package edu.uet.hieuhadict;
+
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -76,17 +78,50 @@ public class DictionaryController {
   }
 
   @FXML
+  private void loadHistoryContent() throws IOException {
+    // TODO implement this
+  }
+
+  @FXML
+  private void loadFavoritesContent() throws IOException {
+    // TODO implement this
+  }
+
+  @FXML
+  private void loadParaTransContent() throws IOException {
+    // TODO implement this
+  }
+
+  @FXML
+  private void loadDictManContent() throws IOException {
+    // TODO implement this
+  }
+
+  @FXML
+  private void loadSettingsContent() throws IOException {
+    // TODO implement this
+  }
+
+  @FXML
   private void closeApplication() {
     Platform.exit();
   }
 
-  @FXML private void minimizeApplication() {
-    ((Stage)mainContainer.getScene().getWindow()).setIconified(true);
+  @FXML
+  private void minimizeApplication() {
+    ((Stage) mainContainer.getScene().getWindow()).setIconified(true);
   }
 
-  @FXML private void restoreOrMaximizeApplication() {
-    ((Stage)mainContainer.getScene().getWindow()).setMaximized(true);
-  }
   @FXML
-  private void initialize() {}
+  private void restoreOrMaximizeApplication() {
+    Stage mainStage = (Stage) mainContainer.getScene().getWindow();
+    boolean isMaximized = mainStage.isMaximized();
+    mainStage.setMaximized(!isMaximized);
+  }
+
+  @FXML
+  private void initialize() throws IOException {
+    // load initial content
+    loadLookupContent();
+  }
 }
