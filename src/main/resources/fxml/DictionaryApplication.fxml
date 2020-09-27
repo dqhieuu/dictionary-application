@@ -45,7 +45,7 @@
                      <Insets left="10.0" />
                   </StackPane.margin>
                </FontAwesomeIconView>
-               <JFXButton fx:id="menuButtonParaTrans" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Dịch văn bản" />
+               <JFXButton fx:id="menuButtonParaTrans" minWidth="0.0" onMouseClicked="#loadParaTransContent" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Dịch văn bản" />
             </StackPane>
             <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
                <FontAwesomeIconView glyphName="DATABASE" size="25.0" styleClass="dict-left-menu-icon">

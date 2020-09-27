@@ -89,7 +89,8 @@ public class DictionaryController {
 
   @FXML
   private void loadParaTransContent() throws IOException {
-    // TODO implement this
+    Parent scene = FXMLLoader.load(getClass().getResource("/fxml/ParaTransContent.fxml"));
+    mainContainer.setCenter(scene);
   }
 
   @FXML

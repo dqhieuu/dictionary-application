@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+
+<GridPane hgap="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="edu.uet.hieuhadict.ParaTransContent">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="130.0" minHeight="0.0" prefHeight="39.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="269.0" minHeight="10.0" prefHeight="235.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="286.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="3">
+        <center>
+            <JFXButton buttonType="RAISED" onMouseClicked="#translateParagraph" prefHeight="43.0" prefWidth="424.0"
+                       style="-fx-background-color: #3bebad;" text="Dịch" BorderPane.alignment="CENTER"/>
+        </center>
+    </BorderPane>
+    <JFXComboBox fx:id="sourceLanguage" prefHeight="41.0" prefWidth="359.0" GridPane.halignment="CENTER"
+                 GridPane.rowIndex="1"/>
+    <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="2">
+        <TextArea fx:id="sourceField" prefHeight="200.0" prefWidth="200.0" wrapText="true"/>
+        <FontAwesomeIconView fx:id="srcTTSIcon" glyphName="VOLUME_UP" onMouseClicked="#sourceTTS" size="20"
+                             StackPane.alignment="BOTTOM_RIGHT"/>
+    </StackPane>
+    <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+        <TextArea fx:id="destinationField" prefHeight="200.0" prefWidth="200.0" wrapText="true"/>
+        <FontAwesomeIconView fx:id="destTTSIcon" glyphName="VOLUME_UP" onMouseClicked="#destinationTTS" size="20"
+                             StackPane.alignment="BOTTOM_RIGHT"/>
+    </StackPane>
+    <JFXComboBox fx:id="destinationLanguage" prefHeight="41.0" prefWidth="360.0" GridPane.columnIndex="2"
+                 GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+    <Label text="Ngôn ngữ gốc"/>
+    <Label text="Ngôn ngữ dịch sang" GridPane.columnIndex="2"/>
+    <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <center>
+          <FontAwesomeIconView glyphName="EXCHANGE" onMouseClicked="#swapLanguages" size="20"
+                               BorderPane.alignment="CENTER"/>
+        </center>
+    </BorderPane>
+</GridPane>

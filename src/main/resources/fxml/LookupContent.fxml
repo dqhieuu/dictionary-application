@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="435.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uet.hieuhadict.LookupContentController">
+<BorderPane prefHeight="435.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uet.hieuhadict.LookupContentController">
     <left>
-        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefWidth="200.0"
-                    BorderPane.alignment="CENTER">
+        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefWidth="200.0" BorderPane.alignment="CENTER">
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                 <top>
-                    <TextField fx:id="wordInput" onKeyReleased="#updateWordList" BorderPane.alignment="CENTER"/>
+                    <TextField fx:id="wordInput" onKeyReleased="#updateWordList" BorderPane.alignment="CENTER" />
                 </top>
                 <center>
-                    <ListView fx:id="wordList" BorderPane.alignment="CENTER"/>
+                    <ListView fx:id="wordList" onMouseClicked="#displayWordContent" BorderPane.alignment="CENTER" />
                 </center>
             </BorderPane>
         </ScrollPane>
@@ -25,46 +25,11 @@
     <center>
         <ScrollPane fitToWidth="true" BorderPane.alignment="CENTER">
             <VBox fx:id="definitionContent" prefWidth="100.0">
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
-                <Label text="Awooo test feoooooooooooaaaaaaaaaaaaa tet et e ststs dsf dsf sđghfd dfgxaaaaaaaaaaaaaaaaaoooooooo"
-                       wrapText="true"/>
+                <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="389.0">
+                    <FontAwesomeIconView/>
+                    <Label prefWidth="337.0" text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaawrwazdwdwadwad wae aewbewabawb"
+                           wrapText="true"/>
+                </HBox>
             </VBox>
         </ScrollPane>
     </center>
