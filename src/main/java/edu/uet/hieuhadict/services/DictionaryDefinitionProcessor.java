@@ -13,74 +13,74 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DictionaryDefinitionProcessor {
-  private Label bigWord;
 
-  private Label header;
-
-  private Label pronun;
-
-  private Label definition;
-
-  private Label example_sentence;
-
-  private Label example_sentence_translated;
-
-  private ArrayList<Label> unformatted = new ArrayList<>();
-
-  public Node processDefinition(Word searchWord) {
-    if (searchWord == null) {
+  public static Node processDefinition(String wordDefinition) {
+    if (wordDefinition == null) {
+      System.out.println("Failed to load word");
       return null;
     }
+    ArrayList<Label> content = new ArrayList<>();
+
     VBox defProcess = new VBox();
-    bigWord.setText(searchWord.getWord());
-    String def = searchWord.getDefinition();
-    Scanner stringScanner = new Scanner(def);
+    Scanner stringScanner = new Scanner(wordDefinition);
     String temp = "";
-    int index = 0;
+
+    int Index = 0;
+
     do {
       temp = stringScanner.nextLine();
-      if(temp.equals("")) {
-        unformatted.add(new Label(""));
-        defProcess.getChildren().add(unformatted.get(index));
-        index++;
+      if (temp.equals("")) {
+        content.add(new Label(""));
+        defProcess.getChildren().add(content.get(Index));
+        Index++;
         continue;
       }
       switch (temp.charAt(0)) {
+        case '!':
+          content.add(new Label(temp.substring(1).trim()));
+          content.get(Index).getStyleClass().add("Lidiom");
+          defProcess.getChildren().add(content.get(Index));
+          Index++;
+          break;
         case '^':
-          pronun.setText(temp.substring(1).trim());
-          pronun.getStyleClass().add("Lpronun");
-          defProcess.getChildren().add(pronun);
+          content.add(new Label(temp.substring(1).trim()));
+          content.get(Index).getStyleClass().add("Lpronun");
+          defProcess.getChildren().add(content.get(Index));
+          Index++;
           break;
         case '*':
-          header.setText(temp.substring(1).trim());
-          header.getStyleClass().add("Lheader");
-          defProcess.getChildren().add(header);
+          content.add(new Label(temp.substring(1).trim()));
+          content.get(Index).getStyleClass().add("Lheader");
+          defProcess.getChildren().add(content.get(Index));
+          Index++;
           break;
         case '-':
-          definition.setText(temp.substring(1).trim());
-          definition.getStyleClass().add("Ldefinition");
-          defProcess.getChildren().add(definition);
+          content.add(new Label(temp.substring(1).trim()));
+          content.get(Index).getStyleClass().add("Ldefinition");
+          defProcess.getChildren().add(content.get(Index));
+          Index++;
           break;
         case '=':
           for (int i = 0; i < temp.length(); i++) {
             if (Character.compare(temp.charAt(i), '+') == 0) {
-              example_sentence.setText(temp.substring(1, i).trim());
-              example_sentence_translated.setText(temp.substring(i + 1).trim());
+              content.add(new Label(temp.substring(1, i).trim()));
+              content.add(new Label(temp.substring(i + 1).trim()));
               break;
             }
           }
-          example_sentence_translated.getStyleClass().add("Lexample_translated");
-          example_sentence.getStyleClass().add("Lexample");
-          defProcess.getChildren().addAll(example_sentence, example_sentence_translated);
+          content.get(Index + 1).getStyleClass().add("Lexample_translated");
+          content.get(Index).getStyleClass().add("Lexample");
+          defProcess.getChildren().addAll(content.get(Index), content.get(Index + 1));
+          Index = Index + 2;
           break;
         default:
-          unformatted.add(new Label(temp));
-          unformatted.get(index).getStyleClass().add("Lunformatted");
-          defProcess.getChildren().add(unformatted.get(index));
-          index++;
+          content.add(new Label(temp));
+          content.get(Index).getStyleClass().add("Lunformatted");
+          defProcess.getChildren().add(content.get(Index));
+          Index++;
           break;
       }
-    } while (temp != null);
+    } while (stringScanner.hasNextLine());
     return defProcess;
   }
   // TODO implement this !!!
