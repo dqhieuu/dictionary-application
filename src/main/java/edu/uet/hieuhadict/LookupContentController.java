@@ -3,6 +3,7 @@ package edu.uet.hieuhadict;
 import edu.uet.hieuhadict.dao.Word;
 import edu.uet.hieuhadict.dao.WordDao;
 import edu.uet.hieuhadict.dao.WordDaoImpl;
+import edu.uet.hieuhadict.services.DictionaryDefinitionProcessor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -13,6 +14,8 @@ import javafx.scene.layout.VBox;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static edu.uet.hieuhadict.utils.StringFormat.removeAccent;
 
 public class LookupContentController {
   @FXML private ListView<Word> wordList;
@@ -38,6 +41,8 @@ public class LookupContentController {
   private void displayWordContent() {
     Label def = new Label();
     definitionContent.getChildren().clear();
+    /*Word selectedWord = wordList.getSelectionModel().getSelectedItem();
+    definitionContent = new DictionaryDefinitionProcessor().processDefinition( selectedWord.getDefinition() );*/ //=> phần t thêm vào
     definitionContent
         .getChildren()
         .add(new Label(wordList.getSelectionModel().getSelectedItem().getDefinition()));
