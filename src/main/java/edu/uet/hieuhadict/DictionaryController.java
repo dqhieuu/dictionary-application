@@ -80,11 +80,13 @@ public class DictionaryController {
   @FXML
   private void loadHistoryContent() throws IOException {
     // TODO implement this
+
   }
 
   @FXML
   private void loadFavoritesContent() throws IOException {
     // TODO implement this
+
   }
 
   @FXML
