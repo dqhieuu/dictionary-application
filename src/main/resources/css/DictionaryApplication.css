@@ -152,9 +152,13 @@
 
 .definition-pane {
     -fx-padding: 10 10 10 10;
+    -fx-background-radius: 0 0 15 0;
+}
+
+.tts-button {
+    -fx-fill: #9d9d9d;
 }
 
 .tts-button:hover {
-    -fx-scale-x: 1.2;
-    -fx-scale-y: 1.1;
+    -fx-fill: #000000;
 }

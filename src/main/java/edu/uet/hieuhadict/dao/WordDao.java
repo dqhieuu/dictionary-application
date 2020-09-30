@@ -9,7 +9,9 @@ import java.util.List;
 public interface WordDao {
   Word getWordById(int id, String table) throws SQLException;
 
-  List<Word> searchWord(String word, List<String> tables) throws SQLException;
+  List<Word> getAllWordsInDictionary(Dictionary dictionary) throws SQLException;
+
+  List<Word> searchWord(String word, List<Dictionary> dictionaries) throws SQLException;
 
   boolean insertWord(Word word, String table) throws SQLException;
 

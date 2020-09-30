@@ -6,15 +6,22 @@ import edu.uet.hieuhadict.beans.Dictionary;
 import edu.uet.hieuhadict.dao.WordDao;
 import edu.uet.hieuhadict.dao.WordDaoImpl;
 import edu.uet.hieuhadict.utils.LocaleLookup;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class DictManContentController {
   @FXML TableView<Dictionary> dictTable;
@@ -24,6 +31,7 @@ public class DictManContentController {
     TableColumn<Dictionary, String> displayName = new TableColumn<>("Tên từ điển");
     displayName.setCellValueFactory(new PropertyValueFactory<>("displayName"));
     displayName.setCellFactory(TextFieldTableCell.forTableColumn());
+    displayName.setPrefWidth(250);
 
     TableColumn<Dictionary, Boolean> isEnabled = new TableColumn<>("Bật");
     isEnabled.setCellValueFactory(new PropertyValueFactory<>("isEnabled"));
@@ -46,6 +54,7 @@ public class DictManContentController {
             });
 
     TableColumn<Dictionary, String> languageLocale = new TableColumn<>("Ngôn ngữ");
+    languageLocale.setPrefWidth(200);
     languageLocale.setCellValueFactory(new PropertyValueFactory<>("languageLocale"));
 
     languageLocale.setCellFactory(
@@ -62,8 +71,32 @@ public class DictManContentController {
                 } else {
                   langComboBox.getItems().addAll(LocaleLookup.getLanguageCollection("en"));
                   langComboBox.getSelectionModel().select(LocaleLookup.indexOf(locale));
+                  PauseTransition pause = new PauseTransition(Duration.seconds(0.1));
+                  langComboBox
+                      .showingProperty()
+                      .addListener(
+                          (obs, oldItem, newItem) -> {
+                            if (!newItem) {
+                              pause.setOnFinished(
+                                  e -> {
+                                    setGraphic(label);
+                                    label.setText(
+                                        Objects.requireNonNull(
+                                            LocaleLookup.getLanguageCollection("en"))[
+                                            langComboBox.getSelectionModel().getSelectedIndex()]);
+                                  });
+                              pause.playFromStart();
+                            }
+                          });
+                  label.setPrefWidth(languageLocale.getPrefWidth());
                   label.setText(
-                      LocaleLookup.getLanguageCollection("en")[LocaleLookup.indexOf(locale)]);
+                      Objects.requireNonNull(LocaleLookup.getLanguageCollection("en"))[
+                          LocaleLookup.indexOf(locale)]);
+                  label.setOnMouseClicked(
+                      e -> {
+                        setGraphic(langComboBox);
+                        langComboBox.show();
+                      });
                   setGraphic(label);
                 }
               }
@@ -78,19 +111,46 @@ public class DictManContentController {
 
   @FXML
   private void addItem() {
+    /*
     dictTable.getItems().add(new Dictionary("Anything", "Từ điển mới", "en"));
+    */
   }
 
   @FXML
   private void removeItem() {
+    /*
     int selectionIndex = dictTable.getFocusModel().getFocusedIndex();
     if (selectionIndex != -1) {
       dictTable.getItems().remove(selectionIndex);
     }
+     */
   }
 
   @FXML
-  private void editWordList() {}
+  private void editWordList() throws IOException {
+    Dictionary injection = dictTable.getSelectionModel().getSelectedItem();
+    if (injection == null) {
+      return;
+    }
+
+
+
+    Stage stage = new Stage();
+    stage.initStyle(StageStyle.UTILITY);
+    stage.initModality(Modality.APPLICATION_MODAL);
+    stage.setResizable(false);
+    stage.setTitle("Dictionary Modify");
+    Parent root = FXMLLoader.load(getClass().getResource("/fxml/WordListModal.fxml"));
+    root.setUserData(injection);
+    Scene scene = new Scene(root, 600, 400);
+    stage.setScene(scene);
+
+
+
+    System.out.println(injection.getDictionary());
+
+    stage.show();
+  }
 
   @FXML
   private void saveDictionaryList() {}

@@ -3,12 +3,15 @@ package edu.uet.hieuhadict.beans;
 public class Word {
   private String word;
   private String definition;
+  private String locale;
   private boolean isFavorite;
+  private int id = -1;
 
   public Word() {
     word = "";
     definition = "";
     isFavorite = false;
+    locale = "en";
   }
 
   public Word(String word, String definition) {
@@ -16,9 +19,10 @@ public class Word {
     this.definition = definition;
   }
 
-  public Word(String word, String definition, boolean isFavorite) {
+  public Word(String word, String definition, String locale, boolean isFavorite) {
     this.word = word;
     this.definition = definition;
+    this.locale = locale;
     this.isFavorite = isFavorite;
   }
 
@@ -26,6 +30,7 @@ public class Word {
     this.word = other.word;
     this.definition = other.definition;
     this.isFavorite = other.isFavorite;
+    this.locale = other.locale;
   }
 
   public Word setWord(String word) {
@@ -43,6 +48,16 @@ public class Word {
     return this;
   }
 
+  public Word setLocale(String locale) {
+    this.locale = locale;
+    return this;
+  }
+
+  public Word setId(int id) {
+    this.id = id;
+    return this;
+  }
+
   public String getWord() {
     return word;
   }
@@ -53,5 +68,13 @@ public class Word {
 
   public boolean isFavorite() {
     return isFavorite;
+  }
+
+  public String getLocale() {
+    return locale;
+  }
+
+  public int getId() {
+    return id;
   }
 }

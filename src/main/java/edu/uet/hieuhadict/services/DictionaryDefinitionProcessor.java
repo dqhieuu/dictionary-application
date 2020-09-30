@@ -2,7 +2,6 @@ package edu.uet.hieuhadict.services;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.media.MediaPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +11,7 @@ public class DictionaryDefinitionProcessor {
 
   private DictionaryDefinitionProcessor() {}
 
-  private static MediaPlayer mediaPlayer;
-
-  public static List<Node> processDefinition(String wordDefinition) {
+  public static List<Node> processDefinition(String wordDefinition, String locale) {
     if (wordDefinition == null) {
       System.out.println("Failed to load word");
       return null;
@@ -22,7 +19,7 @@ public class DictionaryDefinitionProcessor {
 
     List<Node> list = new ArrayList<>();
     Scanner stringScanner = new Scanner(wordDefinition);
-    String temp = "";
+    String temp;
     boolean firstIdiom = true;
     int idiomCount = 1;
     while (stringScanner.hasNextLine()) {

@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class LookupContentController {
   @FXML private ListView<Word> wordList;
@@ -34,17 +35,15 @@ public class LookupContentController {
   @FXML
   private void updateWordList() throws SQLException {
     WordDao wordDao = new WordDaoImpl();
-    List<String> tables = new ArrayList<>();
     List<Dictionary> dicts = wordDao.getAllDictionaries();
-    for (Dictionary dict : dicts) {
-      if (dict.getIsEnabled()) {
-        tables.add(dict.getDictionary());
-      }
-    }
-    if (tables.size() == 0) return;
+    dicts = dicts.stream().filter(Dictionary::getIsEnabled).collect(Collectors.toList());
+    if (dicts.size() == 0) return;
     List<Word> words;
-    words = wordDao.searchWord(wordInput.getText(), tables);
+    words = wordDao.searchWord(wordInput.getText(), dicts);
     wordList.getItems().setAll(words);
+    if (words.size() > 0) {
+      wordList.scrollTo(0);
+    }
   }
 
   @FXML
@@ -57,6 +56,7 @@ public class LookupContentController {
         wordList.getSelectionModel().select(0);
       }
       String dictWord = selectedWord.getWord();
+      String wordLocale = selectedWord.getLocale();
       Label wordTitle = new Label(dictWord);
       wordTitle.getStyleClass().add("word-label");
       HBox wordTitleComponent = new HBox();
@@ -67,7 +67,7 @@ public class LookupContentController {
       wordTTSIcon.setOnMouseClicked(
           e -> {
             try {
-              DictionaryMediaPlayer.playTTS(dictWord, "en");
+              DictionaryMediaPlayer.playTTS(dictWord, wordLocale);
             } catch (Exception exception) {
               exception.printStackTrace();
             }
@@ -79,7 +79,8 @@ public class LookupContentController {
           .getChildren()
           .addAll(
               Objects.requireNonNull(
-                  DictionaryDefinitionProcessor.processDefinition(selectedWord.getDefinition())));
+                  DictionaryDefinitionProcessor.processDefinition(
+                      selectedWord.getDefinition(), wordLocale)));
     }
   }
 

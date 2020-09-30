@@ -89,6 +89,22 @@ public class WordDaoImpl implements WordDao {
   }
 
   @Override
+  public List<Word> getAllWordsInDictionary(Dictionary dictionary) throws SQLException {
+    List<Word> result = new ArrayList<>();
+    if (dictionary == null) {
+      return result;
+    }
+    String query = String.format("SELECT * FROM '%s';", dictionary.getDictionary());
+
+    Statement stmt = conn.createStatement();
+    ResultSet rs = stmt.executeQuery(query);
+    while (rs.next()) {
+      result.add(new Word(rs.getString(2), rs.getString(3)).setId(rs.getInt(1)));
+    }
+    return result;
+  }
+
+  @Override
   public boolean deleteWordById(int id, String table) throws SQLException {
     String query = String.format("DELETE * FROM '%s' WHERE id=?;", table);
     PreparedStatement pstmt = conn.prepareStatement(query);
@@ -99,33 +115,35 @@ public class WordDaoImpl implements WordDao {
   }
 
   @Override
-  public List<Word> searchWord(String word, List<String> tables) throws SQLException {
+  public List<Word> searchWord(String word, List<Dictionary> dictionaries) throws SQLException {
     List<Word> result = new ArrayList<>();
-    if (tables == null || tables.size() == 0) {
+    if (dictionaries == null || dictionaries.size() == 0) {
       return result;
     }
     StringBuilder query = new StringBuilder();
     boolean isFirst = true;
-    for (String table : tables) {
+    for (Dictionary dict : dictionaries) {
       if (isFirst) {
         isFirst = false;
       } else {
         query.append("UNION ALL ");
       }
-      table = StringFormat.escapeQuotes(table);
+      String locale = dict.getLanguageLocale();
+      String table = StringFormat.escapeQuotes(dict.getDictionary());
+
       word = StringFormat.escapeQuotes(word);
       word = StringFormat.removeAccent(word);
       query.append(
           String.format(
-              "SELECT *, '%s' AS 'table' FROM '%s' WHERE word LIKE '%s%%' ORDER BY LOWER(word) LIMIT 1000",
-              table, table, word));
+              "SELECT *, '%s' AS locale FROM '%s' WHERE word LIKE '%s%%' ORDER BY LOWER(word) LIMIT 200",
+              locale, table, word));
     }
     query.append(";");
     System.out.println(query);
     Statement stmt = conn.createStatement();
     ResultSet rs = stmt.executeQuery(query.toString());
     while (rs.next()) {
-      result.add(new Word(rs.getString(2), rs.getString(3), rs.getBoolean(4)));
+      result.add(new Word(rs.getString(2), rs.getString(3), rs.getString(5), rs.getBoolean(4)));
     }
     return result;
   }
