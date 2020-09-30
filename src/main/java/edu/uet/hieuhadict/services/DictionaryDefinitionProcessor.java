@@ -1,83 +1,128 @@
 package edu.uet.hieuhadict.services;
 
-import edu.uet.hieuhadict.dao.Word;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class DictionaryDefinitionProcessor {
 
-  public VBox processDefinition(String wordDefinition) {
+  private DictionaryDefinitionProcessor() {}
+
+  private static MediaPlayer mediaPlayer;
+
+  public static List<Node> processDefinition(String wordDefinition) {
     if (wordDefinition == null) {
       System.out.println("Failed to load word");
       return null;
     }
-    ArrayList<Label> content = new ArrayList<>();
 
-    VBox defProcess = new VBox();
+    List<Node> list = new ArrayList<>();
     Scanner stringScanner = new Scanner(wordDefinition);
     String temp = "";
-
-    int Index = 0;
-
-    do {
+    boolean firstIdiom = true;
+    int idiomCount = 1;
+    while (stringScanner.hasNextLine()) {
       temp = stringScanner.nextLine();
-      if (temp.equals("")) {
-        content.add(new Label(""));
-        defProcess.getChildren().add(content.get(Index));
-        Index++;
-        continue;
-      }
-      switch (temp.charAt(0)) {
-        case '!':
-          content.add(new Label(temp.substring(1).trim()));
-          content.get(Index).getStyleClass().add("Lidiom");
-          defProcess.getChildren().add(content.get(Index));
-          Index++;
-          break;
-        case '^':
-          content.add(new Label(temp.substring(1).trim()) );
-          content.get(Index).getStyleClass().add("Lpronun");
-          defProcess.getChildren().add(content.get(Index));
-          Index++;
-          break;
-        case '*':
-          content.add(new Label(temp.substring(1).trim()) );
-          content.get(Index).getStyleClass().add("Lheader");
-          defProcess.getChildren().add(content.get(Index));
-          Index++;
-          break;
-        case '-':
-          content.add(new Label(temp.substring(1).trim()) );
-          content.get(Index).getStyleClass().add("Ldefinition");
-          defProcess.getChildren().add(content.get(Index));
-          Index++;
-          break;
-        case '=':
-          for (int i = 0; i < temp.length(); i++) {
-            if (Character.compare(temp.charAt(i), '+') == 0) {
-              content.add(new Label(temp.substring(1, i).trim()) );
-              content.add(new Label(temp.substring(i + 1).trim()) );
-              break;
+      Label textField = new Label("");
+      textField.setWrapText(true);
+
+      if (temp.length() <= 0) {
+        textField.getStyleClass().addAll("definition-label", "label-unformatted");
+      } else {
+        String prepend;
+        String TTSable;
+        switch (temp.charAt(0)) {
+          case '!':
+            if (firstIdiom) {
+              Label idiomLabel = new Label("idiom");
+              idiomLabel.getStyleClass().addAll("definition-label", "label-header");
+              list.add(idiomLabel);
+              firstIdiom = false;
             }
-          }
-          content.get(Index+1).getStyleClass().add("Lexample_translated");
-          content.get(Index).getStyleClass().add("Lexample");
-          defProcess.getChildren()
-                  .addAll(content.get(Index), content.get(Index+1));
-          Index = Index+2;
-          break;
-        default:
-          content.add(new Label(temp));
-          content.get(Index).getStyleClass().add("Lunformatted");
-          defProcess.getChildren().add(content.get(Index));
-          Index++;
-          break;
+            TTSable = temp.substring(1).trim();
+
+            textField.setOnMouseClicked(
+                e -> {
+                  try {
+                    DictionaryMediaPlayer.playTTS(TTSable, "en");
+                  } catch (Exception exception) {
+                    exception.printStackTrace();
+                  }
+                });
+            textField.setText(idiomCount + ". " + TTSable);
+            textField.getStyleClass().addAll("definition-label", "label-idiom");
+            idiomCount++;
+            break;
+          case '^':
+            String text = temp.substring(1).trim();
+            if (text.length() == 0) {
+              textField.setText("/undefined/");
+            } else {
+              textField.setText(text);
+            }
+
+            textField.getStyleClass().addAll("definition-label", "label-pronunciation");
+            break;
+          case '*':
+            if (!firstIdiom) {
+              firstIdiom = true;
+              idiomCount = 1;
+            }
+            textField.setText(temp.substring(1).trim());
+            textField.getStyleClass().addAll("definition-label", "label-header");
+            break;
+          case '-':
+            prepend = "• ";
+            if (!firstIdiom) {
+              prepend = "  •  ";
+            }
+            textField.setText(prepend + temp.substring(1).trim());
+
+            textField.getStyleClass().addAll("definition-label", "label-explanation");
+            break;
+          case '=':
+            String[] split = temp.split("\\+", 2);
+            prepend = "◦ ";
+            if (!firstIdiom) {
+              prepend = "    ◦  ";
+            }
+            TTSable = split[0].substring(1).trim();
+
+            textField.setOnMouseClicked(
+                e -> {
+                  try {
+                    DictionaryMediaPlayer.playTTS(TTSable, "en");
+                  } catch (Exception exception) {
+                    exception.printStackTrace();
+                  }
+                });
+            textField.setText(prepend + TTSable);
+            textField.getStyleClass().addAll("definition-label", "label-example");
+            if (split.length > 1) {
+              prepend = "⮡  ";
+              if (!firstIdiom) {
+                prepend = "    ⮡  ";
+              }
+              Label textTranslated = new Label(prepend + split[1].trim());
+              textTranslated.getStyleClass().add("label-example-translated");
+              textTranslated.setWrapText(true);
+              list.add(textField);
+              list.add(textTranslated);
+              continue;
+            }
+            break;
+          default:
+            textField.setText(temp);
+            textField.getStyleClass().add("label-unformatted");
+            break;
+        }
       }
-    } while (stringScanner.hasNextLine());
-    return defProcess;
+      list.add(textField);
+    }
+    return list;
   }
-  // TODO implement this !!!
 }

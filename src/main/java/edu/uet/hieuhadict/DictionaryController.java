@@ -1,6 +1,7 @@
 package edu.uet.hieuhadict;
 
 import com.jfoenix.controls.JFXButton;
+import edu.uet.hieuhadict.services.DictionaryMediaPlayer;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -95,16 +96,19 @@ public class DictionaryController {
 
   @FXML
   private void loadDictManContent() throws IOException {
-    // TODO implement this
+    Parent scene = FXMLLoader.load(getClass().getResource("/fxml/DictManContent.fxml"));
+    mainContainer.setCenter(scene);
   }
 
   @FXML
   private void loadSettingsContent() throws IOException {
-    // TODO implement this
+    Parent scene = FXMLLoader.load(getClass().getResource("/fxml/SettingsContent.fxml"));
+    mainContainer.setCenter(scene);
   }
 
   @FXML
   private void closeApplication() {
+    DictionaryMediaPlayer.closePlayer();
     Platform.exit();
   }
 

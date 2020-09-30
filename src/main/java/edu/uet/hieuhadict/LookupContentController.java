@@ -1,21 +1,28 @@
 package edu.uet.hieuhadict;
 
-import edu.uet.hieuhadict.dao.Word;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import edu.uet.hieuhadict.beans.Dictionary;
+import edu.uet.hieuhadict.beans.Word;
 import edu.uet.hieuhadict.dao.WordDao;
 import edu.uet.hieuhadict.dao.WordDaoImpl;
 import edu.uet.hieuhadict.services.DictionaryDefinitionProcessor;
+import edu.uet.hieuhadict.services.DictionaryMediaPlayer;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static edu.uet.hieuhadict.utils.StringFormat.removeAccent;
+import java.util.Objects;
 
 public class LookupContentController {
   @FXML private ListView<Word> wordList;
@@ -26,31 +33,70 @@ public class LookupContentController {
 
   @FXML
   private void updateWordList() throws SQLException {
-    wordList.getItems().clear();
     WordDao wordDao = new WordDaoImpl();
     List<String> tables = new ArrayList<>();
-    tables.add("AnhViet");
+    List<Dictionary> dicts = wordDao.getAllDictionaries();
+    for (Dictionary dict : dicts) {
+      if (dict.getIsEnabled()) {
+        tables.add(dict.getDictionary());
+      }
+    }
+    if (tables.size() == 0) return;
     List<Word> words;
     words = wordDao.searchWord(wordInput.getText(), tables);
-    for (Word word : words) {
-      wordList.getItems().add(word);
-    }
+    wordList.getItems().setAll(words);
   }
 
   @FXML
   private void displayWordContent() {
-    Label def = new Label();
-    definitionContent.getChildren().clear();
-    /*Word selectedWord = wordList.getSelectionModel().getSelectedItem();
-    definitionContent = new DictionaryDefinitionProcessor().processDefinition( selectedWord.getDefinition() );*/ //=> phần t thêm vào
-    definitionContent
-        .getChildren()
-        .add(new Label(wordList.getSelectionModel().getSelectedItem().getDefinition()));
+    Word selectedWord = wordList.getSelectionModel().getSelectedItem();
+    if (wordList.getItems().size() > 0) {
+      definitionContent.getChildren().clear();
+      if (selectedWord == null) {
+        selectedWord = wordList.getItems().get(0);
+        wordList.getSelectionModel().select(0);
+      }
+      String dictWord = selectedWord.getWord();
+      Label wordTitle = new Label(dictWord);
+      wordTitle.getStyleClass().add("word-label");
+      HBox wordTitleComponent = new HBox();
+      wordTitleComponent.setSpacing(8);
+      wordTitleComponent.setAlignment(Pos.CENTER_LEFT);
+      FontAwesomeIconView wordTTSIcon = new FontAwesomeIconView(FontAwesomeIcon.VOLUME_UP, "22");
+      wordTTSIcon.getStyleClass().add("tts-button");
+      wordTTSIcon.setOnMouseClicked(
+          e -> {
+            try {
+              DictionaryMediaPlayer.playTTS(dictWord, "en");
+            } catch (Exception exception) {
+              exception.printStackTrace();
+            }
+          });
+      wordTitleComponent.getChildren().addAll(wordTitle, wordTTSIcon);
+
+      definitionContent.getChildren().add(wordTitleComponent);
+      definitionContent
+          .getChildren()
+          .addAll(
+              Objects.requireNonNull(
+                  DictionaryDefinitionProcessor.processDefinition(selectedWord.getDefinition())));
+    }
+  }
+
+  @FXML
+  private void keyReleased(KeyEvent e) throws SQLException {
+    KeyCode kc = e.getCode();
+    if (kc.isKeypadKey()
+        || kc.isDigitKey()
+        || kc.isLetterKey()
+        || kc == KeyCode.BACK_SPACE
+        || kc == KeyCode.DELETE) {
+      updateWordList();
+    }
   }
 
   @FXML
   private void initialize() throws SQLException {
-    updateWordList();
     wordList.setCellFactory(
         param ->
             new ListCell<Word>() {
@@ -61,5 +107,7 @@ public class LookupContentController {
                 setText(empty || item == null || item.getWord() == null ? "" : item.getWord());
               }
             });
+    updateWordList();
+    displayWordContent();
   }
 }

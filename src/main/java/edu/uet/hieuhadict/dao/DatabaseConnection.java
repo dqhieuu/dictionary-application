@@ -9,13 +9,12 @@ class DatabaseConnection {
 
   private DatabaseConnection() {}
 
-  public static void connect() {
+  public static void connect(String location) {
     try {
       // workaround for jar build
       Class.forName("org.sqlite.JDBC");
 
-      String url =
-          "jdbc:sqlite::resource:" + DatabaseConnection.class.getResource("/database/Dict.db");
+      String url = "jdbc:sqlite::resource:" + DatabaseConnection.class.getResource(location);
       conn = DriverManager.getConnection(url);
       System.out.println("Connection to SQLite has been established.");
     } catch (SQLException | ClassNotFoundException e) {
@@ -25,7 +24,7 @@ class DatabaseConnection {
 
   public static Connection getConnection() {
     if (conn == null) {
-      connect();
+      connect("/database/Dict.db");
     }
     return conn;
   }

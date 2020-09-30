@@ -1,15 +1,21 @@
 package edu.uet.hieuhadict.utils;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class LocaleLookup {
-  private static final String[] locales = {
-    "af", "sq", "am", "ar", "hy", "az", "eu", "be", "bn", "bs", "bg", "ca", "ceb", "zh-CN", "zh-TW",
-    "co", "hr", "cs", "da", "nl", "en", "eo", "et", "fi", "fr", "fy", "gl", "ka", "de", "el", "gu",
-    "ht", "ha", "haw", "he", "hi", "hmn", "hu", "is", "ig", "id", "ga", "it", "ja", "jv", "kn",
-    "kk", "km", "rw", "ko", "ku", "ky", "lo", "la", "lv", "lt", "lb", "mk", "mg", "ms", "ml", "mt",
-    "mi", "mr", "mn", "my", "ne", "no", "ny", "or", "ps", "fa", "pl", "pt", "pa", "ro", "ru", "sm",
-    "gd", "sr", "st", "sn", "sd", "si", "sk", "sl", "so", "es", "su", "sw", "sv", "tl", "tg", "ta",
-    "tt", "te", "th", "tr", "tk", "uk", "ur", "ug", "uz", "vi", "cy", "xh", "yi", "yo", "zu"
-  };
+  private static final List<String> locales =
+      Arrays.asList(
+          "af", "sq", "am", "ar", "hy", "az", "eu", "be", "bn", "bs", "bg", "ca", "ceb", "zh-CN",
+          "zh-TW", "co", "hr", "cs", "da", "nl", "en", "eo", "et", "fi", "fr", "fy", "gl", "ka",
+          "de", "el", "gu", "ht", "ha", "haw", "he", "hi", "hmn", "hu", "is", "ig", "id", "ga",
+          "it", "ja", "jv", "kn", "kk", "km", "rw", "ko", "ku", "ky", "lo", "la", "lv", "lt", "lb",
+          "mk", "mg", "ms", "ml", "mt", "mi", "mr", "mn", "my", "ne", "no", "ny", "or", "ps", "fa",
+          "pl", "pt", "pa", "ro", "ru", "sm", "gd", "sr", "st", "sn", "sd", "si", "sk", "sl", "so",
+          "es", "su", "sw", "sv", "tl", "tg", "ta", "tt", "te", "th", "tr", "tk", "uk", "ur", "ug",
+          "uz", "vi", "cy", "xh", "yi", "yo", "zu");
+
+  private static final int SIZE = locales.size();
 
   private static final String[] langEn = {
     "Afrikaans",
@@ -236,7 +242,7 @@ public class LocaleLookup {
   };
 
   public static String getLocale(int index) {
-    return locales[index];
+    return locales.get(index);
   }
 
   public static String[] getLanguageCollection(String locale) {
@@ -247,5 +253,13 @@ public class LocaleLookup {
       return langEn;
     }
     return null;
+  }
+
+  public static int size() {
+    return SIZE;
+  }
+
+  public static int indexOf(String locale) {
+    return locales.indexOf(locale);
   }
 }

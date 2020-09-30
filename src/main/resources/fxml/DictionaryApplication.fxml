@@ -21,7 +21,7 @@
                      <Insets left="10.0" />
                   </StackPane.margin>
                </FontAwesomeIconView>
-               <JFXButton fx:id="menuButtonLookup" minWidth="0.0" onMouseClicked="#loadLookupContent" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Từ điển" />
+               <JFXButton fx:id="menuButtonLookup" minWidth="0.0" onAction="#loadLookupContent" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Từ điển" />
             </StackPane>
             <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
                <FontAwesomeIconView glyphName="HISTORY" size="25.0" styleClass="dict-left-menu-icon">
@@ -45,7 +45,7 @@
                      <Insets left="10.0" />
                   </StackPane.margin>
                </FontAwesomeIconView>
-               <JFXButton fx:id="menuButtonParaTrans" minWidth="0.0" onMouseClicked="#loadParaTransContent" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Dịch văn bản" />
+               <JFXButton fx:id="menuButtonParaTrans" minWidth="0.0" onAction="#loadParaTransContent" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Dịch văn bản" />
             </StackPane>
             <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
                <FontAwesomeIconView glyphName="DATABASE" size="25.0" styleClass="dict-left-menu-icon">
@@ -53,7 +53,7 @@
                      <Insets left="10.0" />
                   </StackPane.margin>
                </FontAwesomeIconView>
-               <JFXButton fx:id="menuButtonDictMan" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Quản lý từ điển" />
+               <JFXButton fx:id="menuButtonDictMan" minWidth="0.0" onAction="#loadDictManContent" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Quản lý từ điển" />
             </StackPane>
             <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
                <FontAwesomeIconView glyphName="COGS" size="25.0" styleClass="dict-left-menu-icon">
@@ -61,7 +61,7 @@
                      <Insets left="10.0" />
                   </StackPane.margin>
                </FontAwesomeIconView>
-               <JFXButton fx:id="menuButtonSettings" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Cài đặt chung">
+               <JFXButton fx:id="menuButtonSettings" minWidth="0.0" onAction="#loadSettingsContent" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="Cài đặt chung">
                   <StackPane.margin>
                      <Insets />
                   </StackPane.margin>

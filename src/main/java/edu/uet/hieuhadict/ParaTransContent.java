@@ -1,38 +1,33 @@
 package edu.uet.hieuhadict;
 
 import com.jfoenix.controls.JFXComboBox;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import edu.uet.hieuhadict.services.DictionaryMediaPlayer;
 import edu.uet.hieuhadict.services.GoogleService;
 import edu.uet.hieuhadict.utils.LocaleLookup;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
-import java.io.File;
 import java.nio.charset.StandardCharsets;
 
 public class ParaTransContent {
-  @FXML JFXComboBox<String> sourceLanguage;
+  @FXML private JFXComboBox<String> sourceLanguage;
 
-  @FXML JFXComboBox<String> destinationLanguage;
+  @FXML private JFXComboBox<String> destinationLanguage;
 
-  @FXML TextArea sourceField;
+  @FXML private TextArea sourceField;
 
-  @FXML TextArea destinationField;
+  @FXML private TextArea destinationField;
 
-  @FXML FontAwesomeIconView srcTTSIcon;
+  @FXML private FontAwesomeIconView srcTTSIcon;
 
-  @FXML FontAwesomeIconView destTTSIcon;
+  @FXML private FontAwesomeIconView destTTSIcon;
 
   private void loadLanguageToComboBoxes() {
     String[] list = LocaleLookup.getLanguageCollection("vi");
-    for (String elem : list) {
-      sourceLanguage.getItems().add(elem);
-      destinationLanguage.getItems().add(elem);
-    }
+    sourceLanguage.getItems().addAll(list);
+    sourceLanguage.getItems().add("Tự động");
+    destinationLanguage.getItems().addAll(list);
   }
 
   @FXML
@@ -42,10 +37,16 @@ public class ParaTransContent {
     if (srcIndex != -1 && destIndex != -1) {
       String textInput = sourceField.getText().trim();
       if (textInput.length() > 0) {
-        String srcLocale = LocaleLookup.getLocale(srcIndex);
+        String srcLocale;
+        System.out.println(srcIndex);
+        if (srcIndex >= LocaleLookup.size()) {
+          srcLocale = "auto";
+        } else {
+          srcLocale = LocaleLookup.getLocale(srcIndex);
+        }
+
         String destLocale = LocaleLookup.getLocale(destIndex);
         String translated = GoogleService.getTranslatedString(textInput, srcLocale, destLocale);
-        System.out.println(translated);
         byte[] toBytes = translated.getBytes();
         translated = new String(toBytes, StandardCharsets.UTF_8);
 
@@ -55,16 +56,12 @@ public class ParaTransContent {
   }
 
   @FXML
-  private void sourceTTS(MouseEvent e) throws Exception {
+  private void sourceTTS() throws Exception {
     int localeIndex = sourceLanguage.getSelectionModel().getSelectedIndex();
-    if (localeIndex != -1) {
+    if (localeIndex != -1 && localeIndex < LocaleLookup.size()) {
       String textInput = sourceField.getText().trim();
       if (textInput.length() > 0) {
-        String locale = LocaleLookup.getLocale(localeIndex);
-        File speech = GoogleService.getTTSMp3File(textInput, locale);
-        Media mp3 = new Media(speech.toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(mp3);
-        mediaPlayer.play();
+        DictionaryMediaPlayer.playTTS(textInput, LocaleLookup.getLocale(localeIndex));
       }
     }
   }
@@ -75,11 +72,7 @@ public class ParaTransContent {
     if (localeIndex != -1) {
       String textInput = destinationField.getText().trim();
       if (textInput.length() > 0) {
-        String locale = LocaleLookup.getLocale(localeIndex);
-        File speech = GoogleService.getTTSMp3File(textInput, locale);
-        Media mp3 = new Media(speech.toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(mp3);
-        mediaPlayer.play();
+        DictionaryMediaPlayer.playTTS(textInput, LocaleLookup.getLocale(localeIndex));
       }
     }
   }
@@ -88,14 +81,16 @@ public class ParaTransContent {
   private void swapLanguages() {
     int srcIndex = sourceLanguage.getSelectionModel().getSelectedIndex();
     int destIndex = destinationLanguage.getSelectionModel().getSelectedIndex();
-    sourceLanguage.getSelectionModel().select(destIndex);
-    destinationLanguage.getSelectionModel().select(srcIndex);
+    if (srcIndex < LocaleLookup.size()) {
+      sourceLanguage.getSelectionModel().select(destIndex);
+      destinationLanguage.getSelectionModel().select(srcIndex);
+    }
   }
 
   @FXML
   private void initialize() {
     loadLanguageToComboBoxes();
-    sourceLanguage.getSelectionModel().select(20);
+    sourceLanguage.getSelectionModel().select(109);
     destinationLanguage.getSelectionModel().select(103);
   }
 }

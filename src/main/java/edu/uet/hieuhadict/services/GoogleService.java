@@ -40,7 +40,7 @@ public class GoogleService {
           String lineRead;
           StringBuilder jsonResult = new StringBuilder();
           while ((lineRead = br.readLine()) != null) {
-            jsonResult.append(lineRead).append("\n");
+            jsonResult.append(lineRead);
           }
 
           Gson gson = new Gson();
@@ -78,6 +78,7 @@ public class GoogleService {
       if (conn.getResponseCode() == 200) { // successful request
         result = File.createTempFile("dict_", ".mp3.tmp");
         result.deleteOnExit();
+        System.out.println(result.getAbsolutePath());
         // try-with-resources
         try (InputStream is = conn.getInputStream();
             OutputStream os = new FileOutputStream(result)) {

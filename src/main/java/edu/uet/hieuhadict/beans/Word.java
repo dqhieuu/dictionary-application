@@ -1,28 +1,28 @@
-package edu.uet.hieuhadict.dao;
+package edu.uet.hieuhadict.beans;
 
 public class Word {
   private String word;
   private String definition;
   private boolean isFavorite;
 
-  Word() {
+  public Word() {
     word = "";
     definition = "";
     isFavorite = false;
   }
 
-  Word(String word, String definition) {
+  public Word(String word, String definition) {
     this.word = word;
     this.definition = definition;
   }
 
-  Word(String word, String definition, boolean isFavorite) {
+  public Word(String word, String definition, boolean isFavorite) {
     this.word = word;
     this.definition = definition;
     this.isFavorite = isFavorite;
   }
 
-  Word(Word other) {
+  public Word(Word other) {
     this.word = other.word;
     this.definition = other.definition;
     this.isFavorite = other.isFavorite;
