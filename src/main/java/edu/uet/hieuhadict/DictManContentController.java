@@ -127,7 +127,7 @@ public class DictManContentController {
   }
 
   @FXML
-  private void editWordList() throws IOException {
+  private void editWordList() throws IOException, SQLException {
     Dictionary injection = dictTable.getSelectionModel().getSelectedItem();
     if (injection == null) {
       return;
@@ -140,14 +140,13 @@ public class DictManContentController {
     stage.initModality(Modality.APPLICATION_MODAL);
     stage.setResizable(false);
     stage.setTitle("Dictionary Modify");
-    Parent root = FXMLLoader.load(getClass().getResource("/fxml/WordListModal.fxml"));
-    root.setUserData(injection);
-    Scene scene = new Scene(root, 600, 400);
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/WordListModal.fxml"));
+    Scene scene = new Scene(loader.load(), 600, 400);
+
+    WordListModalController controller = loader.getController();
+    controller.initData(injection);
     stage.setScene(scene);
 
-
-
-    System.out.println(injection.getDictionary());
 
     stage.show();
   }

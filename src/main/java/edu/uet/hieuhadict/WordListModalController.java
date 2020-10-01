@@ -5,12 +5,11 @@ import edu.uet.hieuhadict.beans.Word;
 import edu.uet.hieuhadict.dao.WordDao;
 import edu.uet.hieuhadict.dao.WordDaoImpl;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -21,12 +20,25 @@ public class WordListModalController {
 
   @FXML private ListView<Word> wordList;
 
+  @FXML private TextField wordName;
+
+  @FXML private TextArea wordDefinition;
+
   private Dictionary dictionary;
 
-  @FXML
-  private void initialize() throws SQLException {
+  @FXML private void selectWord() {
+    Word selected = wordList.getSelectionModel().getSelectedItem();
+    if (selected == null) {
+      return;
+    }
 
-    dictionary = (Dictionary) dictionaryModify.getUserData();
+    wordName.setText(selected.getWord());
+    wordDefinition.setText(selected.getDefinition());
+
+  }
+
+  @FXML
+  private void initialize() {
 
     wordList.setCellFactory(
         param ->
@@ -38,11 +50,14 @@ public class WordListModalController {
                 setText(empty || item == null || item.getWord() == null ? "" : item.getWord());
               }
             });
+  }
 
-    System.out.println(dictionary);
+  public void initData(Dictionary dictionary) throws SQLException {
+    this.dictionary = dictionary;
 
     WordDao wordDao = new WordDaoImpl();
     List<Word> words = wordDao.getAllWordsInDictionary(dictionary);
+    System.out.println(dictionary.getDictionary());
     wordList.getItems().setAll(words);
   }
 }
