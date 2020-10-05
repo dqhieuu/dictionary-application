@@ -74,6 +74,7 @@ public class WordListModalController {
     selected.setWord(name).setDefinition(defintion);
 
     wordDao.updateWordById(selected, selected.getId(), dictionary.getDictionary());
+    wordList.refresh();
   }
 
   @FXML
