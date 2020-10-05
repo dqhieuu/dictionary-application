@@ -1,5 +1,6 @@
 package edu.uet.hieuhadict;
 
+import edu.uet.hieuhadict.services.UserPreferences;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 public class DictionaryApplication extends Application {
   private double xOffset = 0;
@@ -20,10 +24,15 @@ public class DictionaryApplication extends Application {
 
   @Override
   public void start(Stage primaryStage) throws IOException {
+    Preferences prefs = UserPreferences.getInstance();
     primaryStage.setTitle("Dictionary Application");
 
     // loads initial fxml file
-    Parent root = FXMLLoader.load(getClass().getResource("/fxml/DictionaryApplication.fxml"));
+    Parent root =
+        FXMLLoader.load(
+            getClass().getResource("/fxml/DictionaryApplication.fxml"),
+            ResourceBundle.getBundle(
+                "bundles.Dictionary", new Locale(prefs.get(UserPreferences.APP_LANGUAGE, "vi"))));
 
     // makes scene draggable
     root.setOnMousePressed(
@@ -42,6 +51,12 @@ public class DictionaryApplication extends Application {
     // creates transparent scene and sets scene to fxml node
     Scene scene = new Scene(root, 800, 450);
     scene.setFill(Color.TRANSPARENT);
+
+    // sets pinned window property
+    if (prefs.getBoolean(UserPreferences.PIN_WINDOW, false)) {
+      primaryStage.setAlwaysOnTop(true);
+    }
+
     primaryStage.initStyle(StageStyle.TRANSPARENT);
     primaryStage.setScene(scene);
 

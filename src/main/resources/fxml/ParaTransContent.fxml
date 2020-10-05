@@ -29,7 +29,7 @@
             <JFXButton buttonType="RAISED" onMouseClicked="#translateParagraph" prefHeight="43.0" prefWidth="424.0" style="-fx-background-color: #3bebad;" text="Dịch" BorderPane.alignment="CENTER" />
         </center>
     </BorderPane>
-    <JFXComboBox fx:id="sourceLanguage" prefHeight="41.0" prefWidth="359.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+    <JFXComboBox fx:id="sourceLanguage" onAction="#saveSrcLocale" prefHeight="41.0" prefWidth="359.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
     <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="2">
         <TextArea fx:id="sourceField" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
         <FontAwesomeIconView fx:id="srcTTSIcon" glyphName="VOLUME_UP" onMouseClicked="#sourceTTS" size="20" StackPane.alignment="BOTTOM_RIGHT">
@@ -44,7 +44,7 @@
             <Insets bottom="3.0" right="3.0" />
          </StackPane.margin></FontAwesomeIconView>
     </StackPane>
-    <JFXComboBox fx:id="destinationLanguage" prefHeight="41.0" prefWidth="360.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+    <JFXComboBox fx:id="destinationLanguage" onAction="#saveDestLocale" prefHeight="41.0" prefWidth="360.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
     <Label text="Ngôn ngữ gốc" />
     <Label text="Ngôn ngữ dịch sang" GridPane.columnIndex="2" />
     <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">

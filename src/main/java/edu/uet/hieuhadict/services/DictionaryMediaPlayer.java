@@ -12,12 +12,17 @@ public class DictionaryMediaPlayer {
     File speech = GoogleService.getTTSMp3File(content, locale);
     Media mp3 = new Media(speech.toURI().toString());
     mediaPlayer = new MediaPlayer(mp3);
+    double volume = UserPreferences.getInstance().getDouble(UserPreferences.VOLUME, UserPreferences.DEFAULT_VOLUME);
+    mediaPlayer.setVolume(volume/100.0);
+    mediaPlayer.setOnEndOfMedia(DictionaryMediaPlayer::closePlayer);
     mediaPlayer.play();
   }
 
   public static void closePlayer() {
     if (mediaPlayer != null) {
+      mediaPlayer.stop();
       mediaPlayer.dispose();
+      mediaPlayer = null;
     }
   }
 }

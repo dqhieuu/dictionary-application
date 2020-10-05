@@ -12,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class WordListModalController {
 
@@ -26,7 +25,10 @@ public class WordListModalController {
 
   private Dictionary dictionary;
 
-  @FXML private void selectWord() {
+  private WordDao wordDao;
+
+  @FXML
+  private void selectWord() {
     Word selected = wordList.getSelectionModel().getSelectedItem();
     if (selected == null) {
       return;
@@ -34,12 +36,49 @@ public class WordListModalController {
 
     wordName.setText(selected.getWord());
     wordDefinition.setText(selected.getDefinition());
+  }
 
+  @FXML
+  private void addWord() throws SQLException {
+    wordDao.insertWord(new Word("New word ", ""), dictionary.getDictionary());
+    updateWordList();
+    wordList.scrollTo(wordList.getItems().size() - 1);
+  }
+
+  @FXML
+  private void removeWord() throws SQLException {
+    Word selected = wordList.getSelectionModel().getSelectedItem();
+    if (selected == null) {
+      return;
+    }
+
+    wordDao.deleteWordById(selected.getId(), dictionary.getDictionary());
+
+    updateWordList();
+  }
+
+  @FXML
+  private void saveModifiedWord() throws SQLException {
+    Word selected = wordList.getSelectionModel().getSelectedItem();
+    if (selected == null) {
+      return;
+    }
+
+    String name = wordName.getText();
+    String defintion = wordDefinition.getText();
+
+    if (name.length() == 0) {
+      return;
+    }
+
+    selected.setWord(name).setDefinition(defintion);
+
+    wordDao.updateWordById(selected, selected.getId(), dictionary.getDictionary());
   }
 
   @FXML
   private void initialize() {
-
+    wordDao = new WordDaoImpl();
     wordList.setCellFactory(
         param ->
             new ListCell<Word>() {
@@ -52,12 +91,11 @@ public class WordListModalController {
             });
   }
 
-  public void initData(Dictionary dictionary) throws SQLException {
+  public void setDictionary(Dictionary dictionary) {
     this.dictionary = dictionary;
+  }
 
-    WordDao wordDao = new WordDaoImpl();
-    List<Word> words = wordDao.getAllWordsInDictionary(dictionary);
-    System.out.println(dictionary.getDictionary());
-    wordList.getItems().setAll(words);
+  public void updateWordList() throws SQLException {
+    wordList.getItems().setAll(wordDao.getAllWordsInDictionary(dictionary));
   }
 }

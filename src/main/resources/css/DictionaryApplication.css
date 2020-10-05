@@ -162,3 +162,11 @@
 .tts-button:hover {
     -fx-fill: #000000;
 }
+
+#flag-vn {
+    -fx-background-image:  url("/images/flag_vn.png");
+}
+
+#flag-us {
+    -fx-background-image:  url("/images/flag_us.png");
+}

@@ -45,7 +45,7 @@ public class DictionaryDefinitionProcessor {
             textField.setOnMouseClicked(
                 e -> {
                   try {
-                    DictionaryMediaPlayer.playTTS(TTSable, "en");
+                    DictionaryMediaPlayer.playTTS(TTSable, locale);
                   } catch (Exception exception) {
                     exception.printStackTrace();
                   }
@@ -92,7 +92,7 @@ public class DictionaryDefinitionProcessor {
             textField.setOnMouseClicked(
                 e -> {
                   try {
-                    DictionaryMediaPlayer.playTTS(TTSable, "en");
+                    DictionaryMediaPlayer.playTTS(TTSable, locale);
                   } catch (Exception exception) {
                     exception.printStackTrace();
                   }

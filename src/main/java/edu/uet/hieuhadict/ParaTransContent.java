@@ -1,14 +1,15 @@
 package edu.uet.hieuhadict;
 
 import com.jfoenix.controls.JFXComboBox;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import edu.uet.hieuhadict.services.DictionaryMediaPlayer;
 import edu.uet.hieuhadict.services.GoogleService;
+import edu.uet.hieuhadict.services.UserPreferences;
 import edu.uet.hieuhadict.utils.LocaleLookup;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
 import java.nio.charset.StandardCharsets;
+import java.util.prefs.Preferences;
 
 public class ParaTransContent {
   @FXML private JFXComboBox<String> sourceLanguage;
@@ -19,12 +20,11 @@ public class ParaTransContent {
 
   @FXML private TextArea destinationField;
 
-  @FXML private FontAwesomeIconView srcTTSIcon;
-
-  @FXML private FontAwesomeIconView destTTSIcon;
-
   private void loadLanguageToComboBoxes() {
-    String[] list = LocaleLookup.getLanguageCollection("vi");
+    String[] list =
+        LocaleLookup.getLanguageCollection(
+            UserPreferences.getInstance()
+                .get(UserPreferences.APP_LANGUAGE, UserPreferences.DEFAULT_APP_LANGUAGE));
     sourceLanguage.getItems().addAll(list);
     sourceLanguage.getItems().add("Tự động");
     destinationLanguage.getItems().addAll(list);
@@ -38,7 +38,6 @@ public class ParaTransContent {
       String textInput = sourceField.getText().trim();
       if (textInput.length() > 0) {
         String srcLocale;
-        System.out.println(srcIndex);
         if (srcIndex >= LocaleLookup.size()) {
           srcLocale = "auto";
         } else {
@@ -88,9 +87,29 @@ public class ParaTransContent {
   }
 
   @FXML
+  private void saveSrcLocale() {
+    int index = sourceLanguage.getSelectionModel().getSelectedIndex();
+    if (index != -1) {
+      UserPreferences.getInstance().putInt(UserPreferences.PARA_TRANSLATE_SRC, index);
+    }
+  }
+
+  @FXML
+  private void saveDestLocale() {
+    int index = destinationLanguage.getSelectionModel().getSelectedIndex();
+    if (index != -1) {
+      UserPreferences.getInstance().putInt(UserPreferences.PARA_TRANSLATE_DEST, index);
+    }
+  }
+
+  @FXML
   private void initialize() {
     loadLanguageToComboBoxes();
-    sourceLanguage.getSelectionModel().select(109);
-    destinationLanguage.getSelectionModel().select(103);
+    Preferences prefs = UserPreferences.getInstance();
+    int srcIndex = prefs.getInt(UserPreferences.PARA_TRANSLATE_SRC, UserPreferences.DEFAULT_PARA_TRANSLATE_SRC);
+    int destIndex = prefs.getInt(UserPreferences.PARA_TRANSLATE_DEST, UserPreferences.DEFAULT_PARA_TRANSLATE_DEST);
+
+    sourceLanguage.getSelectionModel().select(srcIndex);
+    destinationLanguage.getSelectionModel().select(destIndex);
   }
 }

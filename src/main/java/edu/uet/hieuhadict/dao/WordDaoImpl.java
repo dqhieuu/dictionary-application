@@ -21,6 +21,7 @@ public class WordDaoImpl implements WordDao {
       result.add(
           new Dictionary(rs.getString(1), rs.getString(2), rs.getString(3), rs.getBoolean(4)));
     }
+    rs.close();
     return result;
   }
 
@@ -29,21 +30,22 @@ public class WordDaoImpl implements WordDao {
     String dictName = "dict_" + Instant.now().toEpochMilli();
     String query =
         String.format(
-            "CREATE TABLE '%s' (id INTEGER PRIMARY KEY, word TEXT NOT NULL, definition TEXT, is_favortite BOOLEAN DEFAULT (false) NOT NULL);",
+            "CREATE TABLE '%s' (id INTEGER PRIMARY KEY, word TEXT NOT NULL, definition TEXT, is_favorite BOOLEAN DEFAULT (false) NOT NULL);",
             dictName);
     String query2 =
         "INSERT INTO DictList (dictionary, display_name, language_locale, is_enabled) VALUES (?, ?, ?, ?);";
     Statement stmt = conn.createStatement();
 
-    PreparedStatement pstmt2 = conn.prepareStatement(query2);
-    pstmt2.setString(1, dictName);
-    pstmt2.setString(2, dictionary.getDisplayName());
-    pstmt2.setString(3, dictionary.getLanguageLocale());
-    pstmt2.setBoolean(4, dictionary.getIsEnabled());
+    PreparedStatement pstmt = conn.prepareStatement(query2);
+    pstmt.setString(1, dictName);
+    pstmt.setString(2, dictionary.getDisplayName());
+    pstmt.setString(3, dictionary.getLanguageLocale());
+    pstmt.setBoolean(4, dictionary.getIsEnabled());
 
     int affectedRows = stmt.executeUpdate(query);
-    affectedRows += pstmt2.executeUpdate();
-    System.out.println(query);
+    affectedRows += pstmt.executeUpdate();
+    stmt.close();
+    pstmt.close();
     return affectedRows > 0;
   }
 
@@ -58,6 +60,7 @@ public class WordDaoImpl implements WordDao {
     pstmt.setString(4, dictionary.getDictionary());
 
     int affectedRows = pstmt.executeUpdate();
+    pstmt.close();
     return affectedRows > 0;
   }
 
@@ -71,20 +74,30 @@ public class WordDaoImpl implements WordDao {
 
     int affectedRows = pstmt.executeUpdate();
     affectedRows += stmt.executeUpdate(query2);
+    stmt.close();
+    pstmt.close();
     return affectedRows > 0;
   }
 
   @Override
   public Word getWordById(int id, String table) throws SQLException {
     String query = String.format("SELECT * FROM '%s' WHERE id=?;", table);
-    PreparedStatement pstmt = conn.prepareStatement(query);
-    pstmt.setString(1, table);
-    pstmt.setInt(2, id);
-    ResultSet rs = pstmt.executeQuery();
-    Word result = new Word();
-    if (rs.first()) {
-      result.setWord(rs.getString(2)).setDefinition(rs.getString(3)).setFavorite(rs.getBoolean(4));
+    Word result;
+    try (PreparedStatement pstmt = conn.prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery()) {
+
+      pstmt.setString(1, table);
+      pstmt.setInt(2, id);
+
+      result = new Word();
+      if (rs.first()) {
+        result
+            .setWord(rs.getString(2))
+            .setDefinition(rs.getString(3))
+            .setFavorite(rs.getBoolean(4));
+      }
     }
+
     return result;
   }
 
@@ -96,21 +109,25 @@ public class WordDaoImpl implements WordDao {
     }
     String query = String.format("SELECT * FROM '%s';", dictionary.getDictionary());
 
-    Statement stmt = conn.createStatement();
-    ResultSet rs = stmt.executeQuery(query);
-    while (rs.next()) {
-      result.add(new Word(rs.getString(2), rs.getString(3)).setId(rs.getInt(1)));
+    try (Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query)) {
+
+      while (rs.next()) {
+        result.add(new Word(rs.getString(2), rs.getString(3)).setId(rs.getInt(1)));
+      }
     }
     return result;
   }
 
   @Override
   public boolean deleteWordById(int id, String table) throws SQLException {
-    String query = String.format("DELETE * FROM '%s' WHERE id=?;", table);
-    PreparedStatement pstmt = conn.prepareStatement(query);
-    pstmt.setString(1, table);
-    pstmt.setInt(2, id);
-    int rowAffected = pstmt.executeUpdate();
+    String query = String.format("DELETE FROM '%s' WHERE id=?;", table);
+    int rowAffected;
+    try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+      pstmt.setInt(1, id);
+      rowAffected = pstmt.executeUpdate();
+    }
     return rowAffected > 0;
   }
 
@@ -121,6 +138,7 @@ public class WordDaoImpl implements WordDao {
       return result;
     }
     StringBuilder query = new StringBuilder();
+    query.append("SELECT * FROM (");
     boolean isFirst = true;
     for (Dictionary dict : dictionaries) {
       if (isFirst) {
@@ -131,19 +149,38 @@ public class WordDaoImpl implements WordDao {
       String locale = dict.getLanguageLocale();
       String table = StringFormat.escapeQuotes(dict.getDictionary());
 
-      word = StringFormat.escapeQuotes(word);
-      word = StringFormat.removeAccent(word);
+      word = StringFormat.escapeQuotes(word).trim();
+
       query.append(
           String.format(
-              "SELECT *, '%s' AS locale FROM '%s' WHERE word LIKE '%s%%' ORDER BY LOWER(word) LIMIT 200",
-              locale, table, word));
+              "SELECT *, '%s' AS locale FROM '%s' WHERE word LIKE '%s%%' ", locale, table, word));
     }
-    query.append(";");
-    System.out.println(query);
-    Statement stmt = conn.createStatement();
-    ResultSet rs = stmt.executeQuery(query.toString());
-    while (rs.next()) {
-      result.add(new Word(rs.getString(2), rs.getString(3), rs.getString(5), rs.getBoolean(4)));
+    query.append(")ORDER BY LOWER(word) LIMIT 200;");
+    try (Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query.toString())) {
+      while (rs.next()) {
+        result.add(new Word(rs.getString(2), rs.getString(3), rs.getString(5), rs.getBoolean(4)));
+      }
+    }
+
+    if (result.size() == 0) {
+      String locale = dictionaries.get(0).getLanguageLocale();
+      String table = StringFormat.escapeQuotes(dictionaries.get(0).getDictionary());
+      String fuzzyQuery =
+          String.format(
+              "SELECT '%s'.*, '%s' AS locale FROM '%sFuzzy' LEFT JOIN '%s' ON '%sFuzzy'.rowid = '%s'.id WHERE '%sFuzzy'.word MATCH '%s';",
+              table, locale, table, table, table, table, table, word);
+      try (Statement fuzzyStmt = conn.createStatement();
+          ResultSet fuzzyRs = fuzzyStmt.executeQuery(fuzzyQuery)) {
+        while (fuzzyRs.next()) {
+          result.add(
+              new Word(
+                  fuzzyRs.getString(2),
+                  fuzzyRs.getString(3),
+                  fuzzyRs.getString(5),
+                  fuzzyRs.getBoolean(4)));
+        }
+      }
     }
     return result;
   }
@@ -153,12 +190,15 @@ public class WordDaoImpl implements WordDao {
 
     String query =
         String.format("INSERT INTO %s (word, definition, is_favorite) VALUES (?, ?, ?);", table);
-    PreparedStatement pstmt = conn.prepareStatement(query);
-    pstmt.setString(1, word.getWord());
-    pstmt.setString(2, word.getDefinition());
-    pstmt.setBoolean(3, word.isFavorite());
+    int affectedRows;
+    try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+      pstmt.setString(1, word.getWord());
+      pstmt.setString(2, word.getDefinition());
+      pstmt.setBoolean(3, word.isFavorite());
 
-    int affectedRows = pstmt.executeUpdate();
+      affectedRows = pstmt.executeUpdate();
+    }
+
     return affectedRows > 0;
   }
 
@@ -166,14 +206,15 @@ public class WordDaoImpl implements WordDao {
   public boolean updateWordById(Word word, int id, String table) throws SQLException {
     String query =
         String.format(
-            "UPDATE %s SET id = ?, word = ?, definition = ?, is_favorite = ? WHERE id = ?;", table);
-    PreparedStatement pstmt = conn.prepareStatement(query);
-    pstmt.setString(1, word.getWord());
-    pstmt.setString(2, word.getDefinition());
-    pstmt.setBoolean(3, word.isFavorite());
-    pstmt.setInt(4, id);
-
-    int affectedRows = pstmt.executeUpdate();
+            "UPDATE %s SET word = ?, definition = ?, is_favorite = ? WHERE id = ?;", table);
+    int affectedRows;
+    try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+      pstmt.setString(1, word.getWord());
+      pstmt.setString(2, word.getDefinition());
+      pstmt.setBoolean(3, word.isFavorite());
+      pstmt.setInt(4, id);
+      affectedRows = pstmt.executeUpdate();
+    }
     return affectedRows > 0;
   }
 }
