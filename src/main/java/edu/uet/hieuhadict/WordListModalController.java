@@ -9,13 +9,10 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 
 import java.sql.SQLException;
 
 public class WordListModalController {
-
-  @FXML private BorderPane dictionaryModify;
 
   @FXML private ListView<Word> wordList;
 
@@ -42,7 +39,9 @@ public class WordListModalController {
   private void addWord() throws SQLException {
     wordDao.insertWord(new Word("New word ", ""), dictionary.getDictionary());
     updateWordList();
-    wordList.scrollTo(wordList.getItems().size() - 1);
+    int addedIndex = wordList.getItems().size() - 1;
+    wordList.scrollTo(addedIndex);
+    wordList.getSelectionModel().select(addedIndex);
   }
 
   @FXML
@@ -77,6 +76,15 @@ public class WordListModalController {
     wordList.refresh();
   }
 
+  private void setWordFieldsDisable(boolean isDisabled) {
+    wordName.setDisable(isDisabled);
+    wordDefinition.setDisable(isDisabled);
+    if (isDisabled) {
+      wordName.clear();
+      wordDefinition.clear();
+    }
+  }
+
   @FXML
   private void initialize() {
     wordDao = new WordDaoImpl();
@@ -90,6 +98,19 @@ public class WordListModalController {
                 setText(empty || item == null || item.getWord() == null ? "" : item.getWord());
               }
             });
+    wordList
+        .getSelectionModel()
+        .selectedItemProperty()
+        .addListener(
+            event -> {
+              int selectedIndex = wordList.getSelectionModel().getSelectedIndex();
+              setWordFieldsDisable(selectedIndex == -1);
+
+              if (selectedIndex != -1) {
+                selectWord();
+              }
+            });
+    setWordFieldsDisable(true);
   }
 
   public void setDictionary(Dictionary dictionary) {
