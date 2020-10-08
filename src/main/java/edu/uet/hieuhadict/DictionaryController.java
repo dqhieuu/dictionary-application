@@ -2,6 +2,7 @@ package edu.uet.hieuhadict;
 
 import com.jfoenix.controls.JFXButton;
 import edu.uet.hieuhadict.services.DictionaryMediaPlayer;
+import edu.uet.hieuhadict.services.UserPreferences;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -18,8 +19,17 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class DictionaryController {
+  private final ResourceBundle langBundle =
+      ResourceBundle.getBundle(
+          "bundles.Dictionary",
+          new Locale(
+              UserPreferences.getInstance()
+                  .get(UserPreferences.APP_LANGUAGE, UserPreferences.DEFAULT_APP_LANGUAGE)));
+
   @FXML private BorderPane mainContainer;
 
   @FXML private AnchorPane leftMenuContainer;
@@ -90,19 +100,21 @@ public class DictionaryController {
 
   @FXML
   private void loadParaTransContent() throws IOException {
-    Parent scene = FXMLLoader.load(getClass().getResource("/fxml/ParaTransContent.fxml"));
+    Parent scene =
+        FXMLLoader.load(getClass().getResource("/fxml/ParaTransContent.fxml"), langBundle);
     mainContainer.setCenter(scene);
   }
 
   @FXML
   private void loadDictManContent() throws IOException {
-    Parent scene = FXMLLoader.load(getClass().getResource("/fxml/DictManContent.fxml"));
+    Parent scene = FXMLLoader.load(getClass().getResource("/fxml/DictManContent.fxml"), langBundle);
     mainContainer.setCenter(scene);
   }
 
   @FXML
   private void loadSettingsContent() throws IOException {
-    Parent scene = FXMLLoader.load(getClass().getResource("/fxml/SettingsContent.fxml"));
+    Parent scene =
+        FXMLLoader.load(getClass().getResource("/fxml/SettingsContent.fxml"), langBundle);
     mainContainer.setCenter(scene);
   }
 

@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
 public class ParaTransContent {
@@ -20,13 +22,19 @@ public class ParaTransContent {
 
   @FXML private TextArea destinationField;
 
+  private final ResourceBundle langBundle = ResourceBundle.getBundle(
+          "bundles.Dictionary",
+          new Locale(
+                  UserPreferences.getInstance().get(
+                          UserPreferences.APP_LANGUAGE, UserPreferences.DEFAULT_APP_LANGUAGE)));
+
   private void loadLanguageToComboBoxes() {
     String[] list =
         LocaleLookup.getLanguageCollection(
             UserPreferences.getInstance()
                 .get(UserPreferences.APP_LANGUAGE, UserPreferences.DEFAULT_APP_LANGUAGE));
     sourceLanguage.getItems().addAll(list);
-    sourceLanguage.getItems().add("Tự động");
+    sourceLanguage.getItems().add(langBundle.getString("auto"));
     destinationLanguage.getItems().addAll(list);
   }
 

@@ -4,8 +4,14 @@ import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXToggleButton;
 import edu.uet.hieuhadict.dao.DatabaseConnection;
 import edu.uet.hieuhadict.services.UserPreferences;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
 
 import java.io.File;
 import java.sql.SQLException;
@@ -40,6 +46,12 @@ public class SettingsContentController {
       Arrays.stream(files).forEach(File::delete);
     }
     System.out.println("Cache cleared.");
+  }
+
+  @FXML private void setLanguage(MouseEvent event) {
+    System.out.println("Clicked");
+    prefs.put(UserPreferences.APP_LANGUAGE, ((ImageView)event.getSource()).getId());
+    Platform.exit();
   }
 
   @FXML

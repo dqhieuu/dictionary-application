@@ -24,16 +24,26 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class DictManContentController {
   @FXML private TableView<Dictionary> dictTable;
 
   private final WordDao wordDao = new WordDaoImpl();
 
+  private final ResourceBundle langBundle =
+      ResourceBundle.getBundle(
+          "bundles.Dictionary",
+          new Locale(
+              UserPreferences.getInstance()
+                  .get(UserPreferences.APP_LANGUAGE, UserPreferences.DEFAULT_APP_LANGUAGE)));
+
   @FXML
   private void initialize() throws SQLException {
-    TableColumn<Dictionary, String> displayName = new TableColumn<>("Tên từ điển");
+    TableColumn<Dictionary, String> displayName =
+        new TableColumn<>(langBundle.getString("dictName"));
     displayName.setCellValueFactory(new PropertyValueFactory<>("displayName"));
     displayName.setResizable(false);
     displayName.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -48,7 +58,7 @@ public class DictManContentController {
         });
     displayName.setPrefWidth(250);
 
-    TableColumn<Dictionary, Boolean> isEnabled = new TableColumn<>("Bật");
+    TableColumn<Dictionary, Boolean> isEnabled = new TableColumn<>(langBundle.getString("on"));
     isEnabled.setSortable(false);
     isEnabled.setResizable(false);
     isEnabled.setCellValueFactory(new PropertyValueFactory<>("isEnabled"));
@@ -88,7 +98,8 @@ public class DictManContentController {
               }
             });
 
-    TableColumn<Dictionary, String> languageLocale = new TableColumn<>("Ngôn ngữ");
+    TableColumn<Dictionary, String> languageLocale =
+        new TableColumn<>(langBundle.getString("language"));
     languageLocale.setSortable(false);
     languageLocale.setResizable(false);
     languageLocale.setPrefWidth(200);
@@ -163,7 +174,7 @@ public class DictManContentController {
 
   @FXML
   private void addItem() throws SQLException {
-    Dictionary newDict = new Dictionary("<DOESN'T MATTER>", "Từ điển mới", "en");
+    Dictionary newDict = new Dictionary("<DOESN'T MATTER>", langBundle.getString("newDict"), "en");
     wordDao.insertDictionary(newDict);
 
     updateDictionaryList();
@@ -178,7 +189,7 @@ public class DictManContentController {
     Alert alert =
         new Alert(
             Alert.AlertType.CONFIRMATION,
-            String.format("Bạn có chắc muốn xoá \"%s\" chứ?", selected.getDisplayName()),
+            String.format(langBundle.getString("deleteConfirm"), selected.getDisplayName()),
             ButtonType.YES,
             ButtonType.NO);
     alert.showAndWait();
@@ -204,8 +215,9 @@ public class DictManContentController {
     stage.initStyle(StageStyle.UTILITY);
     stage.initModality(Modality.APPLICATION_MODAL);
     stage.setResizable(false);
-    stage.setTitle("Dictionary editor");
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/WordListModal.fxml"));
+    stage.setTitle(langBundle.getString("dictEditor"));
+    FXMLLoader loader =
+        new FXMLLoader(getClass().getResource("/fxml/WordListModal.fxml"), langBundle);
     Scene scene = new Scene(loader.load(), 600, 400);
 
     WordListModalController controller = loader.getController();

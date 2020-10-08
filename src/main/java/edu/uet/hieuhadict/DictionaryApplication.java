@@ -18,6 +18,13 @@ public class DictionaryApplication extends Application {
   private double xOffset = 0;
   private double yOffset = 0;
 
+  private final ResourceBundle langBundle =
+      ResourceBundle.getBundle(
+          "bundles.Dictionary",
+          new Locale(
+              UserPreferences.getInstance()
+                  .get(UserPreferences.APP_LANGUAGE, UserPreferences.DEFAULT_APP_LANGUAGE)));
+
   public static void main(String[] args) {
     launch(args);
   }
@@ -29,10 +36,7 @@ public class DictionaryApplication extends Application {
 
     // loads initial fxml file
     Parent root =
-        FXMLLoader.load(
-            getClass().getResource("/fxml/DictionaryApplication.fxml"),
-            ResourceBundle.getBundle(
-                "bundles.Dictionary", new Locale(prefs.get(UserPreferences.APP_LANGUAGE, "vi"))));
+        FXMLLoader.load(getClass().getResource("/fxml/DictionaryApplication.fxml"), langBundle);
 
     // makes scene draggable
     root.setOnMousePressed(
