@@ -24,22 +24,6 @@
                <JFXButton fx:id="menuButtonLookup" minWidth="0.0" onAction="#loadLookupContent" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="%dictionary" />
             </StackPane>
             <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
-               <FontAwesomeIconView glyphName="HISTORY" size="25.0" styleClass="dict-left-menu-icon">
-                  <StackPane.margin>
-                     <Insets left="10.0" />
-                  </StackPane.margin>
-               </FontAwesomeIconView>
-               <JFXButton fx:id="menuButtonHistory" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="%history" />
-            </StackPane>
-            <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
-               <FontAwesomeIconView glyphName="STAR" size="25.0" styleClass="dict-left-menu-icon">
-                  <StackPane.margin>
-                     <Insets left="10.0" />
-                  </StackPane.margin>
-               </FontAwesomeIconView>
-               <JFXButton fx:id="menuButtonFavorites" minWidth="0.0" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="%favorites" />
-            </StackPane>
-            <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
                <FontAwesomeIconView glyphName="LANGUAGE" size="25.0" styleClass="dict-left-menu-icon">
                   <StackPane.margin>
                      <Insets left="10.0" />

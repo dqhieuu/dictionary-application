@@ -5,6 +5,7 @@ import edu.uet.hieuhadict.services.DictionaryMediaPlayer;
 import edu.uet.hieuhadict.services.GoogleService;
 import edu.uet.hieuhadict.services.UserPreferences;
 import edu.uet.hieuhadict.utils.LocaleLookup;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
@@ -22,11 +23,12 @@ public class ParaTransContent {
 
   @FXML private TextArea destinationField;
 
-  private final ResourceBundle langBundle = ResourceBundle.getBundle(
+  private final ResourceBundle langBundle =
+      ResourceBundle.getBundle(
           "bundles.Dictionary",
           new Locale(
-                  UserPreferences.getInstance().get(
-                          UserPreferences.APP_LANGUAGE, UserPreferences.DEFAULT_APP_LANGUAGE)));
+              UserPreferences.getInstance()
+                  .get(UserPreferences.APP_LANGUAGE, UserPreferences.DEFAULT_APP_LANGUAGE)));
 
   private void loadLanguageToComboBoxes() {
     String[] list =
@@ -53,11 +55,28 @@ public class ParaTransContent {
         }
 
         String destLocale = LocaleLookup.getLocale(destIndex);
+
         String translated = GoogleService.getTranslatedString(textInput, srcLocale, destLocale);
         byte[] toBytes = translated.getBytes();
         translated = new String(toBytes, StandardCharsets.UTF_8);
 
         destinationField.setText(translated);
+
+        // translates in another thread
+        Task<Void> task =
+            new Task<Void>() {
+              @Override
+              public Void call() throws Exception {
+                String translated =
+                    GoogleService.getTranslatedString(textInput, srcLocale, destLocale);
+                byte[] toBytes = translated.getBytes();
+                translated = new String(toBytes, StandardCharsets.UTF_8);
+
+                destinationField.setText(translated);
+                return null;
+              }
+            };
+        new Thread(task).start();
       }
     }
   }
@@ -114,8 +133,12 @@ public class ParaTransContent {
   private void initialize() {
     loadLanguageToComboBoxes();
     Preferences prefs = UserPreferences.getInstance();
-    int srcIndex = prefs.getInt(UserPreferences.PARA_TRANSLATE_SRC, UserPreferences.DEFAULT_PARA_TRANSLATE_SRC);
-    int destIndex = prefs.getInt(UserPreferences.PARA_TRANSLATE_DEST, UserPreferences.DEFAULT_PARA_TRANSLATE_DEST);
+    int srcIndex =
+        prefs.getInt(
+            UserPreferences.PARA_TRANSLATE_SRC, UserPreferences.DEFAULT_PARA_TRANSLATE_SRC);
+    int destIndex =
+        prefs.getInt(
+            UserPreferences.PARA_TRANSLATE_DEST, UserPreferences.DEFAULT_PARA_TRANSLATE_DEST);
 
     sourceLanguage.getSelectionModel().select(srcIndex);
     destinationLanguage.getSelectionModel().select(destIndex);

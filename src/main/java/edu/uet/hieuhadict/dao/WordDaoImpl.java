@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+/** It just works. Please don't touch it. */
 public class WordDaoImpl implements WordDao {
   private static final Connection conn = DatabaseConnection.getConnection();
 
@@ -131,6 +132,23 @@ public class WordDaoImpl implements WordDao {
     return rowAffected > 0;
   }
 
+  /**
+   * This function does most of the heavy lifting in this application.
+   *
+   * <p>It first searches the word accurately; if it doesn't find it, it searches the word
+   * approximately using some fuzzy search algorithm. The algorithm is that first it creates a
+   * virtual sqlite table, then it uses the table to access Wagner edit distance algorithm underlying
+   * that table, given that the dll to hieuspellfix1 has already been loaded. I didn't write the
+   * whole function, I just modified some parts of that .c file and compiled it to suit my purposes.
+   *
+   * <p>However, it currently only accesses the table named table_with_index_0_fuzzy (not really its
+   * name), because I don't give a damn about it anymore.
+   *
+   * @param word string of word
+   * @param dictionaries list of dictionaries
+   * @return list of words
+   * @throws SQLException exception
+   */
   @Override
   public List<Word> searchWord(String word, List<Dictionary> dictionaries) throws SQLException {
     List<Word> result = new ArrayList<>();

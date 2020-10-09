@@ -1,17 +1,30 @@
 package edu.uet.hieuhadict.beans;
 
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Dictionary class is a pojo class that has 4 attributes stored in the DictList table:
+ *
+ * <ul>
+ *   <li>dictionary: The actual name of the dictionary, that should only be read by the WordDao,
+ *       internally.
+ *   <li>displayName: The name displayed in the GUI.
+ *   <li>languageLocale: The ISO standard locale code. Used for detecting text-to-speech output
+ *       language.
+ *   <li>isEnabled: The state of the dictionary.
+ * </ul>
+ *
+ * <p>The [attribute]Property() methods in this class are necessary for reflection in some javafx
+ * methods.
+ */
 public class Dictionary {
   private final StringProperty dictionary = new SimpleStringProperty();
   private final StringProperty displayName = new SimpleStringProperty();
   private final StringProperty languageLocale = new SimpleStringProperty();
   private final BooleanProperty isEnabled = new SimpleBooleanProperty();
-
 
   public Dictionary(String dictionary, String displayName, String languageLocale) {
     this.dictionary.set(dictionary);
@@ -20,7 +33,8 @@ public class Dictionary {
     isEnabled.set(true);
   }
 
-  public Dictionary(String dictionary, String displayName, String languageLocale, boolean isEnabled) {
+  public Dictionary(
+      String dictionary, String displayName, String languageLocale, boolean isEnabled) {
     this.dictionary.set(dictionary);
     this.displayName.set(displayName);
     this.languageLocale.set(languageLocale);

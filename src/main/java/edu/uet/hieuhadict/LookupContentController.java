@@ -45,6 +45,7 @@ public class LookupContentController {
     }
   }
 
+  /** Displays definition by adding list of nodes dynamically */
   @FXML
   private void displayWordContent() {
     Word selectedWord = wordList.getSelectionModel().getSelectedItem();
@@ -83,6 +84,12 @@ public class LookupContentController {
     }
   }
 
+  /**
+   * Keys that update the word list.
+   *
+   * @param e key event
+   * @throws SQLException exception
+   */
   @FXML
   private void keyReleased(KeyEvent e) throws SQLException {
     KeyCode kc = e.getCode();

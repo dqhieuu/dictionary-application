@@ -31,6 +31,12 @@ public class StringFormat {
     return ch;
   }
 
+  /**
+   * Removes Vietnamese diacritics. Source code is from some website on the Internet
+   *
+   * @param str text to remove
+   * @return text removed
+   */
   public static String removeAccent(String str) {
     StringBuilder sb = new StringBuilder(str);
     for (int i = 0; i < sb.length(); i++) {
@@ -39,6 +45,12 @@ public class StringFormat {
     return sb.toString();
   }
 
+  /**
+   * Escapes quotes in sql statements. Prevents sql injection.
+   *
+   * @param str text to escape quotes
+   * @return text with quotes escaped
+   */
   public static String escapeQuotes(String str) {
     return str.replace("'", "''");
   }

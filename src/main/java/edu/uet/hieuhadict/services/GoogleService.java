@@ -17,19 +17,33 @@ public class GoogleService {
   private static final String USER_AGENT =
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36";
 
+  /**
+   * We don't use the official Google API because we have no money, and the unofficial ones are
+   * either dead or unreliable af.
+   *
+   * Returns the translated string got from Google translate.
+   *
+   * @param text text
+   * @param sourceLang locale of the text you want to translate
+   * @param destLang locale you want to translate to
+   * @return formatted, translated text.
+   * @throws Exception exception
+   */
   public static String getTranslatedString(String text, String sourceLang, String destLang)
       throws Exception {
     URL u =
         new URL(
             String.format(
-                "https://translate.googleapis.com/translate_a/single?client=gtx&sl=%s&tl=%s&dt=t&q=%s&ie=UTF-8&oe=UTF-165",
+                "https://translate.googleapis.com/translate_a/single?client=gtx&sl=%s&tl=%s&dt=t&q=%s",
                 sourceLang,
                 destLang,
                 URLEncoder.encode(text.trim(), StandardCharsets.UTF_8.toString())));
+    // https, because why not
     HttpsURLConnection conn = (HttpsURLConnection) u.openConnection();
 
     StringBuilder result = new StringBuilder();
     try (AutoCloseable ignored = conn::disconnect) {
+      // we must always provide user agent when browsing websites nowadays
       conn.setRequestProperty("User-Agent", USER_AGENT);
 
       if (conn.getResponseCode() == 200) { // successful request
@@ -44,12 +58,15 @@ public class GoogleService {
           }
 
           Gson gson = new Gson();
+          /* The json result we get is really weird, so in order to get the wanted translated text,
+           * we access the parsed json like this. (we aren't using the official google api, so this is what it has to be) */
           JsonArray arr =
               JsonParser.parseString(jsonResult.toString())
                   .getAsJsonArray()
                   .get(0)
                   .getAsJsonArray();
 
+          // extracts text in json array(s)
           for (int i = 0; i < arr.size(); i++) {
             JsonArray trans = arr.get(i).getAsJsonArray();
             String translated = gson.fromJson(trans.get(0), String.class);
@@ -63,6 +80,17 @@ public class GoogleService {
     }
   }
 
+  /**
+   * We don't use the official Google API because we have no money, and the unofficial ones are
+   * either dead or unreliable af.
+   *
+   * Returns the translated mp3 tts got from Google translate.
+   *
+   * @param text text that need to be converted
+   * @param lang language locale of text
+   * @return A file object that has already been written to temp folder.
+   * @throws Exception exception
+   */
   public static File getTTSMp3File(String text, String lang) throws Exception {
     URL u =
         new URL(

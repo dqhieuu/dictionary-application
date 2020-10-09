@@ -61,6 +61,7 @@ public class DictionaryApplication extends Application {
       primaryStage.setAlwaysOnTop(true);
     }
 
+    // sets transparent stage
     primaryStage.initStyle(StageStyle.TRANSPARENT);
     primaryStage.setScene(scene);
 
@@ -75,8 +76,7 @@ public class DictionaryApplication extends Application {
               boolean hasRoundedCornersClass = root.getStyleClass().contains("rounded-corners");
               if (isMaximized) {
                 if (hasRoundedCornersClass) {
-                  root.getStyleClass().clear();
-                  root.getStyleClass().addAll("root", "dict-primary-container");
+                  root.getStyleClass().removeIf(st -> st.equals("rounded-corners"));
                 }
               } else {
                 if (!hasRoundedCornersClass) {

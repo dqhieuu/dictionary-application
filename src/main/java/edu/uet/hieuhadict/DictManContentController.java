@@ -3,7 +3,6 @@ package edu.uet.hieuhadict;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import edu.uet.hieuhadict.beans.Dictionary;
-import edu.uet.hieuhadict.beans.Word;
 import edu.uet.hieuhadict.dao.WordDao;
 import edu.uet.hieuhadict.dao.WordDaoImpl;
 import edu.uet.hieuhadict.services.UserPreferences;
@@ -12,7 +11,6 @@ import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -40,6 +38,14 @@ public class DictManContentController {
               UserPreferences.getInstance()
                   .get(UserPreferences.APP_LANGUAGE, UserPreferences.DEFAULT_APP_LANGUAGE)));
 
+  /**
+   * DictTable isn't an ordinary table, so we need to generate it dynamically, which leads to the
+   * looooooooong code below. Long as it seems, it only generate rows with: checkboxes, editable
+   * fields, labels that also acts as comboboxes to reduce resource consumption (the idea behind
+   * it is kind of novel).
+   *
+   * @throws SQLException exception
+   */
   @FXML
   private void initialize() throws SQLException {
     TableColumn<Dictionary, String> displayName =
@@ -172,6 +178,12 @@ public class DictManContentController {
     dictTable.getItems().setAll(wordDao.getAllDictionaries());
   }
 
+  private void disablePinWindow() {
+    // removes pin if windows is pinned otherwise dialog gets covered by the app
+    ((Stage) dictTable.getScene().getWindow()).setAlwaysOnTop(false);
+    UserPreferences.getInstance().putBoolean(UserPreferences.PIN_WINDOW, false);
+  }
+
   @FXML
   private void addItem() throws SQLException {
     Dictionary newDict = new Dictionary("<DOESN'T MATTER>", langBundle.getString("newDict"), "en");
@@ -186,6 +198,8 @@ public class DictManContentController {
     if (selected == null) {
       return;
     }
+    disablePinWindow();
+
     Alert alert =
         new Alert(
             Alert.AlertType.CONFIRMATION,
@@ -201,6 +215,13 @@ public class DictManContentController {
     }
   }
 
+  /**
+   * Opens a modal window with WordListModal.fxml content. It injects a Dictionary object to the
+   * controller first, before creation.
+   *
+   * @throws IOException exception
+   * @throws SQLException exception
+   */
   @FXML
   private void editWordList() throws IOException, SQLException {
     Dictionary injection = dictTable.getSelectionModel().getSelectedItem();
@@ -208,8 +229,7 @@ public class DictManContentController {
       return;
     }
 
-    ((Stage) dictTable.getScene().getWindow()).setAlwaysOnTop(false);
-    UserPreferences.getInstance().putBoolean(UserPreferences.PIN_WINDOW, false);
+    disablePinWindow();
 
     Stage stage = new Stage();
     stage.initStyle(StageStyle.UTILITY);

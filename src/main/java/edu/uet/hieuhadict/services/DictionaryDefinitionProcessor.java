@@ -11,6 +11,28 @@ public class DictionaryDefinitionProcessor {
 
   private DictionaryDefinitionProcessor() {}
 
+  /**
+   * This function parses line by line following the <a
+   * href="http://www.informatik.uni-leipzig.de/~duc/Dict/install.html">StarDict</a> dictionary
+   * format.
+   *
+   * <p>Line starts with:
+   *
+   * <ul>
+   *   <li>"^": pronunciation
+   *   <li>"*": header
+   *   <li>"-": standard bulleted line
+   *   <li>"!": idiom (numbered line)
+   *   <li>"=": (example, translated example) pair of lines, line breaks at the first "+"
+   *   <li>None of the above: unformatted line
+   * </ul>
+   *
+   * Nodes are created dynamically, classes are also added to nodes dynamically.
+   *
+   * @param wordDefinition The definition to process
+   * @param locale Language locale of word
+   * @return Formatted list of nodes
+   */
   public static List<Node> processDefinition(String wordDefinition, String locale) {
     if (wordDefinition == null) {
       System.out.println("Failed to load word");
@@ -27,14 +49,19 @@ public class DictionaryDefinitionProcessor {
       Label textField = new Label("");
       textField.setWrapText(true);
 
-      if (temp.length() <= 0) {
+      if (temp.length() <= 0) { // empty line
         textField.getStyleClass().addAll("definition-label", "label-unformatted");
       } else {
         String prepend;
-        String TTSable;
+        String TTSable; // text that can be converted to text to speech
         switch (temp.charAt(0)) {
           case '!':
             if (firstIdiom) {
+              /*
+              If we meet the first idiom, we insert a label with text idiom first.
+              This ISN'T arbitrary, the dictionary that originally uses this database
+              also processes definitions like this.
+               */
               Label idiomLabel = new Label("idiom");
               idiomLabel.getStyleClass().addAll("definition-label", "label-header");
               list.add(idiomLabel);
@@ -42,6 +69,7 @@ public class DictionaryDefinitionProcessor {
             }
             TTSable = temp.substring(1).trim();
 
+            // adds listener to mouse click event
             textField.setOnMouseClicked(
                 e -> {
                   try {
@@ -57,6 +85,7 @@ public class DictionaryDefinitionProcessor {
           case '^':
             String text = temp.substring(1).trim();
             if (text.length() == 0) {
+              // blank definition should display undefined
               textField.setText("/undefined/");
             } else {
               textField.setText(text);
@@ -65,6 +94,7 @@ public class DictionaryDefinitionProcessor {
             textField.getStyleClass().addAll("definition-label", "label-pronunciation");
             break;
           case '*':
+            // counter for numbered list
             if (!firstIdiom) {
               firstIdiom = true;
               idiomCount = 1;
@@ -74,6 +104,9 @@ public class DictionaryDefinitionProcessor {
             break;
           case '-':
             prepend = "• ";
+            /* For whatever reason, we double indent when we are in idiom list.
+              It's not arbitrary, again.
+            */
             if (!firstIdiom) {
               prepend = "  •  ";
             }
@@ -82,13 +115,16 @@ public class DictionaryDefinitionProcessor {
             textField.getStyleClass().addAll("definition-label", "label-explanation");
             break;
           case '=':
+            // detects first "+"
             String[] split = temp.split("\\+", 2);
             prepend = "◦ ";
+            // double indention, again
             if (!firstIdiom) {
               prepend = "    ◦  ";
             }
             TTSable = split[0].substring(1).trim();
 
+            // adds listener to mouse click event
             textField.setOnMouseClicked(
                 e -> {
                   try {
@@ -99,6 +135,7 @@ public class DictionaryDefinitionProcessor {
                 });
             textField.setText(prepend + TTSable);
             textField.getStyleClass().addAll("definition-label", "label-example");
+            // line split into 2 lines if there are text after "+" character
             if (split.length > 1) {
               prepend = "⮡  ";
               if (!firstIdiom) {
@@ -113,6 +150,7 @@ public class DictionaryDefinitionProcessor {
             }
             break;
           default:
+            // line that doesn't match any of the above
             textField.setText(temp);
             textField.getStyleClass().add("label-unformatted");
             break;

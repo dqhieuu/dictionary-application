@@ -2,6 +2,10 @@ package edu.uet.hieuhadict.services;
 
 import java.util.prefs.Preferences;
 
+/**
+ * A singleton class that has a lot of constants. Used to save the user preferences. Is
+ * user-specific on Windows.
+ */
 public class UserPreferences {
   public static final String PARA_TRANSLATE_SRC = "paraTranslateSrc";
   public static final String PARA_TRANSLATE_DEST = "paraTranslateDest";

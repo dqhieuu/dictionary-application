@@ -3,6 +3,7 @@ package edu.uet.hieuhadict.utils;
 import java.util.Arrays;
 import java.util.List;
 
+/** Locale from Google site */
 public class LocaleLookup {
   private static final List<String> locales =
       Arrays.asList(

@@ -6,20 +6,27 @@ import edu.uet.hieuhadict.dao.DatabaseConnection;
 import edu.uet.hieuhadict.services.UserPreferences;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-
-import javafx.scene.image.Image;
+import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-
 import java.io.File;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
 public class SettingsContentController {
   private final Preferences prefs = UserPreferences.getInstance();
+
+  private final ResourceBundle langBundle =
+      ResourceBundle.getBundle(
+          "bundles.Dictionary",
+          new Locale(
+              UserPreferences.getInstance()
+                  .get(UserPreferences.APP_LANGUAGE, UserPreferences.DEFAULT_APP_LANGUAGE)));
 
   @FXML JFXToggleButton togglePinWindow;
 
@@ -37,6 +44,11 @@ public class SettingsContentController {
     prefs.putDouble(UserPreferences.VOLUME, volumeSlider.getValue());
   }
 
+  /**
+   * Optimizes database and clear tts temp files.
+   *
+   * @throws SQLException exception
+   */
   @FXML
   private void clearCache() throws SQLException {
     DatabaseConnection.optimize();
@@ -48,9 +60,15 @@ public class SettingsContentController {
     System.out.println("Cache cleared.");
   }
 
-  @FXML private void setLanguage(MouseEvent event) {
-    System.out.println("Clicked");
-    prefs.put(UserPreferences.APP_LANGUAGE, ((ImageView)event.getSource()).getId());
+  @FXML
+  private void setLanguage(MouseEvent event) {
+    // removes pin if windows is pinned otherwise dialog gets covered by the app
+    ((Stage) togglePinWindow.getScene().getWindow()).setAlwaysOnTop(false);
+    Alert alert =
+        new Alert(Alert.AlertType.INFORMATION, langBundle.getString("changeLanguageDialog"));
+
+    alert.showAndWait();
+    prefs.put(UserPreferences.APP_LANGUAGE, ((ImageView) event.getSource()).getId());
     Platform.exit();
   }
 

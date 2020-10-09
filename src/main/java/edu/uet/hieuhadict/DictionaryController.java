@@ -11,7 +11,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -19,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -32,15 +32,9 @@ public class DictionaryController {
 
   @FXML private BorderPane mainContainer;
 
-  @FXML private AnchorPane leftMenuContainer;
-
   @FXML private VBox leftMenuVBox;
 
   @FXML private JFXButton menuButtonLookup;
-
-  @FXML private JFXButton menuButtonHistory;
-
-  @FXML private JFXButton menuButtonFavorites;
 
   @FXML private JFXButton menuButtonParaTrans;
 
@@ -48,14 +42,22 @@ public class DictionaryController {
 
   @FXML private JFXButton menuButtonSettings;
 
+  private void setActiveButton(JFXButton btn) {
+    JFXButton prevActive = (JFXButton) leftMenuVBox.lookup(".active-btn");
+    if (prevActive != null) {
+      prevActive.getStyleClass().removeIf(st -> st.equals("active-btn"));
+    }
+    btn.getStyleClass().add("active-btn");
+  }
+
   @FXML
   private void setLeftMenuSizeOnMouseEnter() {
+    // expands button for resizing to work
     menuButtonLookup.setMinWidth(Region.USE_COMPUTED_SIZE);
-    menuButtonHistory.setMinWidth(Region.USE_COMPUTED_SIZE);
-    menuButtonFavorites.setMinWidth(Region.USE_COMPUTED_SIZE);
     menuButtonParaTrans.setMinWidth(Region.USE_COMPUTED_SIZE);
     menuButtonDictMan.setMinWidth(Region.USE_COMPUTED_SIZE);
     menuButtonSettings.setMinWidth(Region.USE_COMPUTED_SIZE);
+    // animation
     Timeline timeline =
         new Timeline(
             new KeyFrame(
@@ -67,12 +69,12 @@ public class DictionaryController {
 
   @FXML
   private void setLeftMenuSizeOnMouseLeave() {
+    // contracts button for resizing to work
     menuButtonLookup.setMinWidth(0);
-    menuButtonHistory.setMinWidth(0);
-    menuButtonFavorites.setMinWidth(0);
     menuButtonParaTrans.setMinWidth(0);
     menuButtonDictMan.setMinWidth(0);
     menuButtonSettings.setMinWidth(0);
+    // animation
     Timeline timeline =
         new Timeline(
             new KeyFrame(
@@ -86,16 +88,7 @@ public class DictionaryController {
   private void loadLookupContent() throws IOException {
     Parent scene = FXMLLoader.load(getClass().getResource("/fxml/LookupContent.fxml"));
     mainContainer.setCenter(scene);
-  }
-
-  @FXML
-  private void loadHistoryContent() throws IOException {
-    // TODO implement this
-  }
-
-  @FXML
-  private void loadFavoritesContent() throws IOException {
-    // TODO implement this
+    setActiveButton(menuButtonLookup);
   }
 
   @FXML
@@ -103,12 +96,14 @@ public class DictionaryController {
     Parent scene =
         FXMLLoader.load(getClass().getResource("/fxml/ParaTransContent.fxml"), langBundle);
     mainContainer.setCenter(scene);
+    setActiveButton(menuButtonParaTrans);
   }
 
   @FXML
   private void loadDictManContent() throws IOException {
     Parent scene = FXMLLoader.load(getClass().getResource("/fxml/DictManContent.fxml"), langBundle);
     mainContainer.setCenter(scene);
+    setActiveButton(menuButtonDictMan);
   }
 
   @FXML
@@ -116,6 +111,7 @@ public class DictionaryController {
     Parent scene =
         FXMLLoader.load(getClass().getResource("/fxml/SettingsContent.fxml"), langBundle);
     mainContainer.setCenter(scene);
+    setActiveButton(menuButtonSettings);
   }
 
   @FXML

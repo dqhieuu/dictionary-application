@@ -17,19 +17,21 @@ public class DatabaseConnection {
 
   private DatabaseConnection() {}
 
-  public static void connect(String location)
+  private static void connect(String location)
       throws SQLException, ClassNotFoundException, IOException {
 
     // necessary for jar build
     Class.forName("org.sqlite.JDBC");
 
     SQLiteConfig config = new SQLiteConfig();
+    // Loading extension must be enabled
     config.enableLoadExtension(true);
 
     String url = "jdbc:sqlite::resource:" + DatabaseConnection.class.getResource(location);
     conn = DriverManager.getConnection(url, config.toProperties());
 
     System.out.println("Connection to SQLite has been established.");
+    // Loads the hieuspellfix1 extension
     loadHieuSpellfix1Extension();
   }
 
@@ -58,6 +60,7 @@ public class DatabaseConnection {
   private static void loadHieuSpellfix1Extension() throws SQLException, IOException {
     String tempDir = System.getProperty("java.io.tmpdir");
     String fileName;
+    // 64 or 32 bit
     if (System.getProperty("sun.arch.data.model").equals("64")) {
       fileName = "HieuSpellfixA.dll";
     } else {
@@ -78,6 +81,12 @@ public class DatabaseConnection {
     System.out.println(fileName + " extension has been loaded.");
   }
 
+  /**
+   * Executes {@code VACUUM;} statement, an effective command for optimizing disk space taken up by
+   * the database.
+   *
+   * @throws SQLException exception
+   */
   public static void optimize() throws SQLException {
     if (conn == null) return;
     try (Statement stmt = conn.createStatement()) {

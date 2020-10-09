@@ -1,5 +1,16 @@
 package edu.uet.hieuhadict.beans;
 
+/**
+ * Word class is a pojo class that has 5 attributes stored in a table representing a dictionary:
+ *
+ * <ul>
+ *   <li>word: The displayed and lookup name of the word. Can be duplicated.
+ *   <li>definition: The definition of the corresponding word.
+ *   <li>locale: The ISO standard locale code. Used for detecting text-to-speech output language.
+ *   <li>isFavorite: If isFavorite=true, Word is displayed in the favorites list.
+ *   <li>id: Internal attribute that's received from the database. Used only in the WordDao for CRUD functions.
+ * </ul>
+ */
 public class Word {
   private String word;
   private String definition;
@@ -31,6 +42,7 @@ public class Word {
     this.definition = other.definition;
     this.isFavorite = other.isFavorite;
     this.locale = other.locale;
+    this.id = other.id;
   }
 
   public Word setWord(String word) {
