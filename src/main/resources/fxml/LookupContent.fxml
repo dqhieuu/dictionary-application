@@ -8,20 +8,20 @@
 
 <BorderPane prefHeight="435.0" prefWidth="591.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uet.hieuhadict.LookupContentController">
     <left>
-        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefWidth="200.0" BorderPane.alignment="CENTER" styleClass="word-content-pane">
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                 <top>
-                    <TextField fx:id="wordInput" onAction="#displayWordContent" onKeyReleased="#keyReleased" BorderPane.alignment="CENTER" />
+                    <TextField fx:id="wordInput" onAction="#displayWordContent" onKeyReleased="#keyReleased" BorderPane.alignment="CENTER" styleClass="word-input"/>
                 </top>
                 <center>
-                    <ListView fx:id="wordList" onMouseClicked="#displayWordContent" BorderPane.alignment="CENTER" />
+                    <ListView fx:id="wordList" onMouseClicked="#displayWordContent" BorderPane.alignment="CENTER" styleClass="word-content-box" />
                 </center>
             </BorderPane>
         </ScrollPane>
     </left>
     <center>
         <ScrollPane fitToWidth="true" styleClass="definition-pane" BorderPane.alignment="CENTER">
-            <VBox fx:id="definitionContent" prefWidth="100.0" />
+            <VBox fx:id="definitionContent" prefWidth="100.0" styleClass="definition-box"/>
         </ScrollPane>
     </center>
 </BorderPane>

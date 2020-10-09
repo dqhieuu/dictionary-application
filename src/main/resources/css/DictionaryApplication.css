@@ -1,13 +1,16 @@
 .dict-top-bar {
-    -fx-background-color: #28df99;
+    /*-fx-background-color: #28df99;*/
+    -fx-background-image: url("/images/Wood.png");
+
 }
 
 .dict-title-bar-icon {
-    -fx-fill: white;
+    -fx-fill: #3e030b;
 }
 
 .dict-left-container {
-    -fx-background-color: #99f3bd;
+    /*-fx-background-color: #99f3bd;*/
+    -fx-background-image: url("/images/Wood.png");
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0.2, 6, 0);
 }
 
@@ -169,4 +172,8 @@
 
 #flag-us {
     -fx-background-image:  url("/images/flag_us.png");
+}
+
+.translate-para-button {
+    -fx-background-color: #3bebad;
 }

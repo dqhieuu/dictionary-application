@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" stylesheets="@../css/DictionaryApplication.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uet.hieuhadict.DictionaryController">
+<BorderPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" stylesheets="@../css/ThemeDark.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uet.hieuhadict.DictionaryController">
    <left>
       <AnchorPane fx:id="leftMenuContainer" onMouseEntered="#setLeftMenuSizeOnMouseEnter" onMouseExited="#setLeftMenuSizeOnMouseLeave" styleClass="dict-left-container" BorderPane.alignment="CENTER">
          <VBox fx:id="leftMenuVBox" prefHeight="300.0" prefWidth="50.0" AnchorPane.topAnchor="0.0">
