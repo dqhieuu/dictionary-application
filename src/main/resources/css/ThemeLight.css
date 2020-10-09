@@ -38,6 +38,8 @@
 }
 
 .rounded-corners .dict-top-bar {
+    -fx-background-image: url("/images/Wood-border-1.png");
+    -fx-background-size: cover, auto;
     -fx-background-radius: 15 15 0 0;
 }
 
@@ -46,6 +48,8 @@
 }
 
 .rounded-corners .dict-left-container {
+    -fx-background-image: url("/images/Wood-border-2.png");
+    -fx-background-size: cover, auto;
     -fx-background-radius: 0 0 0 15;
 }
 
