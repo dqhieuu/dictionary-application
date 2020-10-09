@@ -45,7 +45,7 @@ public class DictionaryController {
   private void setActiveButton(JFXButton btn) {
     JFXButton prevActive = (JFXButton) leftMenuVBox.lookup(".active-btn");
     if (prevActive != null) {
-      prevActive.getStyleClass().removeIf(st -> st.equals("active-btn"));
+      prevActive.getStyleClass().remove("active-btn");
     }
     btn.getStyleClass().add("active-btn");
   }

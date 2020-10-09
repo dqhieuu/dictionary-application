@@ -56,6 +56,13 @@ public class DictionaryApplication extends Application {
     Scene scene = new Scene(root, 800, 450);
     scene.setFill(Color.TRANSPARENT);
 
+    // sets css based on preference
+    scene
+        .getStylesheets()
+        .add(
+            UserPreferences.getThemePath(
+                prefs.getInt(UserPreferences.THEME, UserPreferences.DEFAULT_THEME)));
+
     // sets pinned window property
     if (prefs.getBoolean(UserPreferences.PIN_WINDOW, false)) {
       primaryStage.setAlwaysOnTop(true);
@@ -76,7 +83,7 @@ public class DictionaryApplication extends Application {
               boolean hasRoundedCornersClass = root.getStyleClass().contains("rounded-corners");
               if (isMaximized) {
                 if (hasRoundedCornersClass) {
-                  root.getStyleClass().removeIf(st -> st.equals("rounded-corners"));
+                  root.getStyleClass().remove("rounded-corners");
                 }
               } else {
                 if (!hasRoundedCornersClass) {

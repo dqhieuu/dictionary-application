@@ -299,19 +299,19 @@
 .dict-man-word-list {
     -fx-background-insets: 0;
     -fx-control-inner-background: black;
-    -fx-text-fill: -fx-text-inner-color;
+ /*   -fx-text-fill: -fx-text-inner-color;*/
     -fx-text-inner-color: white;
 }
 
 .dict-man-word-definition {
     -fx-control-inner-background: black;
-    -fx-text-fill: -fx-text-inner-color;
+/*    -fx-text-fill: -fx-text-inner-color;*/
     -fx-text-inner-color: white;
 }
 
 .dict-man-word-name {
     -fx-control-inner-background: black;
-    -fx-text-fill: -fx-text-inner-color;
+ /*   -fx-text-fill: -fx-text-inner-color;*/
     -fx-text-inner-color: white;
 }
 
