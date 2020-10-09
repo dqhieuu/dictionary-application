@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
-<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uet.hieuhadict.ParaTransContent">
+<GridPane hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uet.hieuhadict.ParaTransContent" styleClass="para-trans-theme">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
@@ -24,32 +24,34 @@
         <RowConstraints maxHeight="269.0" minHeight="10.0" prefHeight="235.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="286.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
     </rowConstraints>
-    <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="3">
+    <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="3" styleClass="trans-button">
         <center>
-            <JFXButton buttonType="RAISED" onMouseClicked="#translateParagraph" prefHeight="43.0" prefWidth="424.0" style="-fx-background-color: #3bebad;" text="%translate" BorderPane.alignment="CENTER" />
+            <JFXButton buttonType="RAISED" onMouseClicked="#translateParagraph" prefHeight="43.0" prefWidth="424.0" styleClass="translate-para-button" text="%translate" BorderPane.alignment="CENTER" />
         </center>
     </BorderPane>
-    <JFXComboBox fx:id="sourceLanguage" onAction="#saveSrcLocale" prefHeight="41.0" prefWidth="359.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-    <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="2">
-        <TextArea fx:id="sourceField" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
-        <FontAwesomeIconView fx:id="srcTTSIcon" glyphName="VOLUME_UP" onMouseClicked="#sourceTTS" size="20" StackPane.alignment="BOTTOM_RIGHT">
+    <JFXComboBox fx:id="sourceLanguage" onAction="#saveSrcLocale" prefHeight="41.0" prefWidth="359.0" GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+    <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="2" styleClass="source-field-theme">
+        <TextArea fx:id="sourceField" prefHeight="200.0" prefWidth="200.0" wrapText="true" styleClass="para-trans-content"/>
+        <FontAwesomeIconView fx:id="srcTTSIcon" glyphName="VOLUME_UP" onMouseClicked="#sourceTTS" size="20" StackPane.alignment="BOTTOM_RIGHT" styleClass="source-tts">
          <StackPane.margin>
             <Insets bottom="3.0" right="3.0" />
          </StackPane.margin></FontAwesomeIconView>
     </StackPane>
-    <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-        <TextArea fx:id="destinationField" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
-        <FontAwesomeIconView fx:id="destTTSIcon" glyphName="VOLUME_UP" onMouseClicked="#destinationTTS" size="20" StackPane.alignment="BOTTOM_RIGHT">
+    <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" styleClass="destination-field-theme">
+        <TextArea fx:id="destinationField" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" styleClass="para-trans-content"/>
+        <FontAwesomeIconView fx:id="destTTSIcon" glyphName="VOLUME_UP" onMouseClicked="#destinationTTS" size="20" StackPane.alignment="BOTTOM_RIGHT" styleClass="destination-tts">
          <StackPane.margin>
             <Insets bottom="3.0" right="3.0" />
          </StackPane.margin></FontAwesomeIconView>
     </StackPane>
-    <JFXComboBox fx:id="destinationLanguage" onAction="#saveDestLocale" prefHeight="41.0" prefWidth="360.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+    <JFXComboBox fx:id="destinationLanguage" onAction="#saveDestLocale" prefHeight="41.0" prefWidth="360.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+    <Label text="%srcLang" styleClass="para-trans-text"/>
+    <Label text="%destLang" GridPane.columnIndex="2" styleClass="para-trans-text"/>
     <Label text="%srcLang" />
     <Label text="%destLang" GridPane.columnIndex="2" />
     <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
         <center>
-          <FontAwesomeIconView glyphName="EXCHANGE" onMouseClicked="#swapLanguages" size="20" BorderPane.alignment="CENTER" />
+          <FontAwesomeIconView glyphName="EXCHANGE" onMouseClicked="#swapLanguages" size="20" BorderPane.alignment="CENTER" styleClass="switch-language"/>
         </center>
     </BorderPane>
    <padding>
