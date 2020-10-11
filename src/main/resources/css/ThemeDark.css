@@ -40,7 +40,7 @@
 }
 
 .active-btn {
-    -fx-background-color: #424242;
+    -fx-background-color: rgba(66, 66, 66);
 }
 
 .rounded-corners .dict-top-bar {
