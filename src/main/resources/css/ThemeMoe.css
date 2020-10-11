@@ -46,6 +46,7 @@
 
 .active-btn {
     -fx-background-color: #ff87b4;
+    -fx-font-weight: bold;
 }
 
 .active-btn .text {

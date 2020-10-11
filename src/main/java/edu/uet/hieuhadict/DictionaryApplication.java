@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -71,6 +72,9 @@ public class DictionaryApplication extends Application {
     // Sets transparent stage
     primaryStage.initStyle(StageStyle.TRANSPARENT);
     primaryStage.setScene(scene);
+
+    // Sets taskbar icon
+    primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/dict-icon.png")));
 
     // Shows initial scene
     primaryStage.show();
