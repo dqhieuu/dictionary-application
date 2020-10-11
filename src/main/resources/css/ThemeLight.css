@@ -21,7 +21,7 @@
 
 .dict-left-menu-item:hover {
     -fx-font-weight: bold;
-    -fx-background-color: rgba(212, 171, 45, 0.5);
+    -fx-background-color: rgba(212, 171, 45, 0.3);
 }
 
 .dict-left-menu-button {

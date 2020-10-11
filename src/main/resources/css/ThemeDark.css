@@ -22,7 +22,7 @@
 
 .dict-left-menu-item:hover {
     -fx-font-weight: bold;
-    -fx-background-color: rgba(66, 66, 66, 0.5);
+    -fx-background-color: rgba(66, 66, 66, 0.3);
 }
 
 .dict-left-menu-button {
@@ -262,16 +262,16 @@
     -fx-text-fill: white;
 }
 
-.combo-box .list-cell {
-    -fx-background-color: black;
+.jfx-combo-box {
+    -fx-background-color: transparent;
 }
 
-.combo-box .list-cell {
+.jfx-combo-box .list-cell {
     -fx-text-fill: white;
     -fx-background-color: #424242;
 }
 
-.combo-box .list-cell:odd {
+.jfx-combo-box .list-cell:odd {
     -fx-text-fill: white;
     -fx-background-color: black;
 }
