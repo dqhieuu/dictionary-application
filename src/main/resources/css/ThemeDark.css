@@ -22,7 +22,7 @@
 
 .dict-left-menu-item:hover {
     -fx-font-weight: bold;
-    -fx-background-color: rgb(117, 117, 163);
+    -fx-background-color: rgba(66, 66, 66, 0.5);
 }
 
 .dict-left-menu-button {
@@ -37,6 +37,10 @@
 
 .dict-title-bar-icon:hover {
     -fx-opacity: 0.6;
+}
+
+.active-btn {
+    -fx-background-color: #424242;
 }
 
 .rounded-corners .dict-top-bar {
@@ -256,6 +260,10 @@
 
 .para-trans-text {
     -fx-text-fill: white;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: black;
 }
 
 .combo-box .list-cell {
