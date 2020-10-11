@@ -26,6 +26,7 @@
 }
 
 .dict-left-menu-button {
+    -fx-text-fill: white;
     -fx-alignment: center-left;
     -fx-padding: 0 0 0 60;
 }
@@ -183,11 +184,18 @@
     -fx-text-inner-color: white;
 }
 
-.word-content-box {
+.list-view {
     -fx-background-insets: 0;
-    -fx-control-inner-background: black;
     -fx-text-fill: -fx-text-inner-color;
     -fx-text-inner-color: white;
+}
+
+.list-view .list-cell {
+    -fx-control-inner-background: black;
+}
+
+.list-view .list-cell:odd {
+    -fx-control-inner-background: #424242;
 }
 
 .setting-text {
@@ -252,11 +260,12 @@
 
 .combo-box .list-cell {
     -fx-text-fill: white;
-    -fx-background-color: black;
+    -fx-background-color: #424242;
 }
 
-.combo-box {
+.combo-box .list-cell:odd {
     -fx-text-fill: white;
+    -fx-background-color: black;
 }
 
 .source-tts {
@@ -280,14 +289,15 @@
 }
 
 .translate-para-button {
-    -fx-background-color: red;
+    -fx-background-color: #424242;
+    -fx-text-fill: white;
 }
 
 .dict-management-theme {
     -fx-background: black;
 }
 
-.dict-managemanet-text {
+.dict-management-text {
     -fx-text-fill: white;
 }
 
@@ -351,11 +361,15 @@
 }
 
 .table-view .filler {
-    -fx-background-control: linear-gradient(#131313 0%, #424141 100%);
+    -fx-background-color: linear-gradient(#131313 0%, #424141 100%);
 }
 
-.table-view .table-cell{
+.table-view .table-cell {
     -fx-text-fill: white;
+}
+
+.dict-man-theme .table-row-cell .text{
+    -fx-fill: white!important;
 }
 
 .table-row-cell{
@@ -374,4 +388,9 @@
     -fx-background-color: #005797;
     -fx-background-insets: 0;
     -fx-background-radius: 1;
+}
+
+.clear-temp-btn {
+    -fx-background-color: #424242;
+    -fx-text-fill: white;
 }

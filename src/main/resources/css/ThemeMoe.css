@@ -9,8 +9,6 @@
 
 .dict-top-bar {
     -fx-background-color: linear-gradient(rgb(255, 77, 190), rgba(255, 255, 255, 0.3)) !important;
-
-
 }
 
 .dict-left-container {
@@ -45,7 +43,6 @@
 .jfx-slider > .colored-track {
     -fx-background-color: #c43e82;
 }
-
 
 .active-btn {
     -fx-background-color: #ff87b4;
@@ -97,7 +94,6 @@
 .dict-management-ui .button .text {
     -fx-fill: black;
 }
-
 
 .dict-man-theme .table-view .column-header, .dict-man-theme .table-view .filler {
     -fx-background-color: #ff5188;
