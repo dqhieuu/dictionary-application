@@ -213,7 +213,7 @@
 }
 
 .tts-button:hover {
-    -fx-fill: #ffffff;
+    -fx-fill: #ffffff!important;
 }
 
 #flag-vn {
@@ -297,7 +297,7 @@
     -fx-background: black;
 }
 
-.dict-management-text {
+.dict-managemanet-text {
     -fx-text-fill: white;
 }
 
