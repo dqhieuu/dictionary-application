@@ -85,7 +85,7 @@ public class LookupContentController {
   }
 
   /**
-   * Keys that update the word list.
+   * Keys that update the word list. Reduces redundant wordlist update.
    *
    * @param e key event
    * @throws SQLException exception
@@ -104,6 +104,7 @@ public class LookupContentController {
 
   @FXML
   private void initialize() throws SQLException {
+    // The factory should now generate the word displayed name correctly.
     wordList.setCellFactory(
         param ->
             new ListCell<Word>() {

@@ -52,12 +52,12 @@ public class DictionaryController {
 
   @FXML
   private void setLeftMenuSizeOnMouseEnter() {
-    // expands button for resizing to work
+    // Expands button for resizing to work
     menuButtonLookup.setMinWidth(Region.USE_COMPUTED_SIZE);
     menuButtonParaTrans.setMinWidth(Region.USE_COMPUTED_SIZE);
     menuButtonDictMan.setMinWidth(Region.USE_COMPUTED_SIZE);
     menuButtonSettings.setMinWidth(Region.USE_COMPUTED_SIZE);
-    // animation
+    // Expansion animation
     Timeline timeline =
         new Timeline(
             new KeyFrame(
@@ -69,12 +69,12 @@ public class DictionaryController {
 
   @FXML
   private void setLeftMenuSizeOnMouseLeave() {
-    // contracts button for resizing to work
+    // Contracts button for resizing to work
     menuButtonLookup.setMinWidth(0);
     menuButtonParaTrans.setMinWidth(0);
     menuButtonDictMan.setMinWidth(0);
     menuButtonSettings.setMinWidth(0);
-    // animation
+    // Contraction animation
     Timeline timeline =
         new Timeline(
             new KeyFrame(

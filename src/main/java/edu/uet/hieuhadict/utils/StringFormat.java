@@ -32,7 +32,7 @@ public class StringFormat {
   }
 
   /**
-   * Removes Vietnamese diacritics. Source code is from some website on the Internet
+   * Removes Vietnamese diacritics. Source code is from some website on the Internet.
    *
    * @param str text to remove
    * @return text removed

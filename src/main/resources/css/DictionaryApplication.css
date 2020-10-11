@@ -1,26 +1,22 @@
 .dict-top-bar {
-    /*-fx-background-color: #28df99;*/
-    -fx-background-image: url("/images/Wood.png");
 
 }
 
 .dict-title-bar-icon {
-    -fx-fill: #3e030b;
+
 }
 
 .dict-left-container {
-    /*-fx-background-color: #99f3bd;*/
-    -fx-background-image: url("/images/Wood.png");
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0.2, 6, 0);
+
 }
 
 
 .dict-left-menu-icon {
-    -fx-fill: #3e030b;
+
 }
 
 .dict-left-menu-item:hover {
-    -fx-background-color: rgb(60, 186, 120);
+
 }
 
 .dict-left-menu-button {
@@ -30,6 +26,11 @@
 
 .dict-menu-icon {
 
+}
+
+.root {
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
 }
 
 .dict-title-bar-icon:hover {
@@ -167,19 +168,24 @@
 }
 
 #flag-vn {
-    -fx-background-image:  url("/images/flag_vn.png");
+    -fx-background-image: url("/images/flag_vn.png");
 }
 
 #flag-us {
-    -fx-background-image:  url("/images/flag_us.png");
+    -fx-background-image: url("/images/flag_us.png");
 }
 
 .translate-para-button {
-    -fx-background-color: #3bebad;
+
 }
+
 .active-btn {
-    -fx-background-color: #b39aff;
 }
+
 .active-lang-btn {
-    -fx-effect: dropshadow(gaussian, #ff3939, 10,0.9,0,0);
+    -fx-effect: dropshadow(gaussian, #3982ff, 4, 1, 0, 0);
+}
+
+.lang-btn:hover {
+    -fx-effect: dropshadow(gaussian, #ff7839, 4, 1, 0, 0);
 }

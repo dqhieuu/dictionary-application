@@ -34,11 +34,11 @@ public class DictionaryApplication extends Application {
     Preferences prefs = UserPreferences.getInstance();
     primaryStage.setTitle("Dictionary Application");
 
-    // loads initial fxml file
+    // :oads initial fxml file
     Parent root =
         FXMLLoader.load(getClass().getResource("/fxml/DictionaryApplication.fxml"), langBundle);
 
-    // makes scene draggable
+    // Makes scene draggable
     root.setOnMousePressed(
         event -> {
           xOffset = event.getSceneX();
@@ -52,30 +52,30 @@ public class DictionaryApplication extends Application {
           }
         });
 
-    // creates transparent scene and sets scene to fxml node
+    // Creates transparent scene and sets scene to fxml node
     Scene scene = new Scene(root, 800, 450);
     scene.setFill(Color.TRANSPARENT);
 
-    // sets css based on preference
+    // Sets css based on preference
     scene
         .getStylesheets()
         .add(
             UserPreferences.getThemePath(
                 prefs.getInt(UserPreferences.THEME, UserPreferences.DEFAULT_THEME)));
 
-    // sets pinned window property
+    // Sets pinned window property
     if (prefs.getBoolean(UserPreferences.PIN_WINDOW, false)) {
       primaryStage.setAlwaysOnTop(true);
     }
 
-    // sets transparent stage
+    // Sets transparent stage
     primaryStage.initStyle(StageStyle.TRANSPARENT);
     primaryStage.setScene(scene);
 
-    // shows initial scene
+    // Shows initial scene
     primaryStage.show();
 
-    // listener that adds rounded class to root corresponding to isMaximized() property
+    // Listener that adds rounded class to root corresponding to isMaximized() property
     primaryStage
         .maximizedProperty()
         .addListener(

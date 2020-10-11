@@ -7,8 +7,10 @@ package edu.uet.hieuhadict.beans;
  *   <li>word: The displayed and lookup name of the word. Can be duplicated.
  *   <li>definition: The definition of the corresponding word.
  *   <li>locale: The ISO standard locale code. Used for detecting text-to-speech output language.
- *   <li>isFavorite: If isFavorite=true, Word is displayed in the favorites list.
- *   <li>id: Internal attribute that's received from the database. Used only in the WordDao for CRUD functions.
+ *   <li>isFavorite: If isFavorite=true, Word is displayed in the favorites list. (we have removed
+ *       this feature after a debate, but still keep this attribute)
+ *   <li>id: Internal attribute that's received from the database. Used only in the WordDao for CRUD
+ *       functions.
  * </ul>
  */
 public class Word {

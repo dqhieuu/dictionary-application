@@ -9,7 +9,17 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-/** It just works. Please don't touch it. */
+/**
+ * This is an implementation of the data access object for Word. Most are just simple queries to
+ * sqlite.
+ *
+ * <p>You may notice that we use both String.format and PreparedStatement . Why don't just use one
+ * (in this case, PreparedStatement is the superior solution as it prevents sql injection)?
+ *
+ * <p>Because PreparedStatement can't take table name, the statement jusst doesn't work if you pass
+ * any table names in the PreparedStatement whatsoever. As a result, String.format becomes a
+ * workaround when we need to pass table name.
+ */
 public class WordDaoImpl implements WordDao {
   private static final Connection conn = DatabaseConnection.getConnection();
 
@@ -137,9 +147,10 @@ public class WordDaoImpl implements WordDao {
    *
    * <p>It first searches the word accurately; if it doesn't find it, it searches the word
    * approximately using some fuzzy search algorithm. The algorithm is that first it creates a
-   * virtual sqlite table, then it uses the table to access Wagner edit distance algorithm underlying
-   * that table, given that the dll to hieuspellfix1 has already been loaded. I didn't write the
-   * whole function, I just modified some parts of that .c file and compiled it to suit my purposes.
+   * virtual sqlite table, then it uses the table to access Wagner edit distance algorithm
+   * underlying that table, given that the dll to hieuspellfix1 has already been loaded. I didn't
+   * write the whole function, I just modified some parts of that .c file and compiled it to suit my
+   * purposes.
    *
    * <p>However, it currently only accesses the table named table_with_index_0_fuzzy (not really its
    * name), because I don't give a damn about it anymore.

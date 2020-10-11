@@ -25,24 +25,26 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 public class DictManContentController {
   @FXML private TableView<Dictionary> dictTable;
 
   private final WordDao wordDao = new WordDaoImpl();
 
+  private final Preferences prefs = UserPreferences.getInstance();
+
   private final ResourceBundle langBundle =
       ResourceBundle.getBundle(
           "bundles.Dictionary",
           new Locale(
-              UserPreferences.getInstance()
-                  .get(UserPreferences.APP_LANGUAGE, UserPreferences.DEFAULT_APP_LANGUAGE)));
+              prefs.get(UserPreferences.APP_LANGUAGE, UserPreferences.DEFAULT_APP_LANGUAGE)));
 
   /**
    * DictTable isn't an ordinary table, so we need to generate it dynamically, which leads to the
-   * looooooooong code below. Long as it seems, it only generate rows with: checkboxes, editable
-   * fields, labels that also acts as comboboxes to reduce resource consumption (the idea behind
-   * it is kind of novel).
+   * looooooooong code below. The code might look long, but it does simple functions. It generates
+   * rows with: checkboxes, editable fields, labels that also act as comboboxes to reduce resource
+   * consumption
    *
    * @throws SQLException exception
    */
@@ -69,6 +71,7 @@ public class DictManContentController {
     isEnabled.setResizable(false);
     isEnabled.setCellValueFactory(new PropertyValueFactory<>("isEnabled"));
 
+    // Overrides factory method
     isEnabled.setCellFactory(
         param ->
             new TableCell<Dictionary, Boolean>() {
@@ -120,8 +123,7 @@ public class DictManContentController {
               @Override
               protected void updateItem(String locale, boolean empty) {
                 String appLang =
-                    UserPreferences.getInstance()
-                        .get(UserPreferences.APP_LANGUAGE, UserPreferences.DEFAULT_APP_LANGUAGE);
+                    prefs.get(UserPreferences.APP_LANGUAGE, UserPreferences.DEFAULT_APP_LANGUAGE);
                 super.updateItem(locale, empty);
                 if (locale == null || empty) {
                   setGraphic(null);
@@ -168,6 +170,8 @@ public class DictManContentController {
               }
             });
 
+    /* Adds factory-modified, custom cell columns. addAll() gives warning for inhomogeneous classes
+     * so we don't use that method. */
     dictTable.getColumns().add(isEnabled);
     dictTable.getColumns().add(displayName);
     dictTable.getColumns().add(languageLocale);
@@ -181,7 +185,7 @@ public class DictManContentController {
   private void disablePinWindow() {
     // removes pin if windows is pinned otherwise dialog gets covered by the app
     ((Stage) dictTable.getScene().getWindow()).setAlwaysOnTop(false);
-    UserPreferences.getInstance().putBoolean(UserPreferences.PIN_WINDOW, false);
+    prefs.putBoolean(UserPreferences.PIN_WINDOW, false);
   }
 
   @FXML
@@ -198,6 +202,7 @@ public class DictManContentController {
     if (selected == null) {
       return;
     }
+    /* Must disable pin window otherwise things get covered and cannot be clicked :> */
     disablePinWindow();
 
     Alert alert =
@@ -239,6 +244,12 @@ public class DictManContentController {
     FXMLLoader loader =
         new FXMLLoader(getClass().getResource("/fxml/WordListModal.fxml"), langBundle);
     Scene scene = new Scene(loader.load(), 600, 400);
+    scene
+        .getStylesheets()
+        .addAll(
+            UserPreferences.THEME_DEFAULT_CORE,
+            UserPreferences.getThemePath(
+                prefs.getInt(UserPreferences.THEME, UserPreferences.DEFAULT_THEME)));
 
     WordListModalController controller = loader.getController();
     controller.setDictionary(injection);

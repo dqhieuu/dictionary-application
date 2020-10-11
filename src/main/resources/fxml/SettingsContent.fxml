@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXToggleButton?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -14,6 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <GridPane hgap="10.0" prefHeight="365.0" prefWidth="710.0" styleClass="setting-theme" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uet.hieuhadict.SettingsContentController">
     <columnConstraints>
@@ -21,31 +23,36 @@
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="490.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="55.0" vgrow="NEVER" />
-        <RowConstraints minHeight="10.0" prefHeight="38.0" vgrow="NEVER" />
-        <RowConstraints minHeight="6.0" prefHeight="35.0" vgrow="NEVER" />
-        <RowConstraints maxHeight="65.0" minHeight="0.0" prefHeight="38.0" vgrow="NEVER" />
-        <RowConstraints maxHeight="99.0" minHeight="4.0" prefHeight="37.0" vgrow="NEVER" />
-        <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="39.0" vgrow="NEVER" />
+        <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="41.0" vgrow="NEVER" />
+        <RowConstraints maxHeight="47.0" minHeight="6.0" prefHeight="39.0" vgrow="NEVER" />
+        <RowConstraints maxHeight="65.0" minHeight="0.0" prefHeight="28.0" vgrow="NEVER" />
+        <RowConstraints maxHeight="99.0" minHeight="4.0" prefHeight="35.0" vgrow="NEVER" />
+        <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
     </rowConstraints>
-    <Label styleClass="setting-text" text="%settings" />
+    <Label text="%settings">
+      <styleClass>
+         <String fx:value="setting-text" />
+         <String fx:value="big" />
+      </styleClass>
+      <font>
+         <Font size="29.0" />
+      </font></Label>
     <Label styleClass="setting-text" text="%theme" GridPane.rowIndex="1" />
     <Label styleClass="setting-text" text="%language" GridPane.rowIndex="2" />
     <Label styleClass="setting-text" text="%pinWindow" GridPane.rowIndex="3" />
     <HBox prefHeight="37.0" prefWidth="162.0" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <BorderPane prefHeight="34.0" prefWidth="34.0">
          <center>
-             <ImageView id="vi" fx:id="vnFlagBtn" fitHeight="44.0" fitWidth="32.0" onMouseClicked="#setLanguage"
-                        pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-                 <Image url="@../images/flag_vn.png"/>
+             <ImageView id="vi" fx:id="vnFlagBtn" fitHeight="44.0" fitWidth="32.0" onMouseClicked="#setLanguage" pickOnBounds="true" preserveRatio="true" styleClass="lang-btn" BorderPane.alignment="CENTER">
+                 <Image url="@../images/flag_vn.png" />
              </ImageView>
          </center></BorderPane>
         <BorderPane prefHeight="34.0" prefWidth="34.0">
          <center>
-             <ImageView id="en" fx:id="usFlagBtn" fitHeight="31.0" fitWidth="39.0" onMouseClicked="#setLanguage"
-                        pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-                 <Image url="@../images/flag_us.png"/>
+             <ImageView id="en" fx:id="usFlagBtn" fitHeight="31.0" fitWidth="39.0" onMouseClicked="#setLanguage" pickOnBounds="true" preserveRatio="true" styleClass="lang-btn" BorderPane.alignment="CENTER">
+                 <Image url="@../images/flag_us.png" />
              </ImageView>
          </center></BorderPane>
       <opaqueInsets>
@@ -54,12 +61,12 @@
     </HBox>
     <JFXComboBox fx:id="themeBox" onAction="#setTheme" GridPane.columnIndex="1" GridPane.rowIndex="1" />
     <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="5">
-        <JFXButton buttonType="RAISED" onAction="#clearCache" style="-fx-background-color: #feccdd;" text="%clearTempFiles" />
+        <JFXButton buttonType="RAISED" onAction="#clearCache" styleClass="clear-temp-btn" text="%clearTempFiles" />
     </VBox>
     <JFXToggleButton fx:id="togglePinWindow" onAction="#pinWindow" text=" " GridPane.columnIndex="1" GridPane.rowIndex="3" />
     <Label styleClass="setting-text" text="%volume" GridPane.rowIndex="4" />
     <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-        <JFXSlider fx:id="volumeSlider" onMouseReleased="#setVolume" prefHeight="37.0" prefWidth="137.0"/>
+        <JFXSlider fx:id="volumeSlider" onMouseReleased="#setVolume" prefHeight="37.0" prefWidth="137.0" />
     </HBox>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

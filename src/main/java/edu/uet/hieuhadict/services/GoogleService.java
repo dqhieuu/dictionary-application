@@ -21,7 +21,9 @@ public class GoogleService {
    * We don't use the official Google API because we have no money, and the unofficial ones are
    * either dead or unreliable af.
    *
-   * Returns the translated string got from Google translate.
+   * <p>Returns the translated string got from Google translate. How can we do that for free?
+   * Simple. We access the web browser version of the api, which is free, by sending an
+   * XMLHttpRequest. Then we parse the retrieved json object.
    *
    * @param text text
    * @param sourceLang locale of the text you want to translate
@@ -84,7 +86,9 @@ public class GoogleService {
    * We don't use the official Google API because we have no money, and the unofficial ones are
    * either dead or unreliable af.
    *
-   * Returns the translated mp3 tts got from Google translate.
+   * <p>Returns the translated mp3 tts got from Google translate. How can we do that for free?
+   * Simple. We access the web browser version of the api, which is free, by sending an
+   * XMLHttpRequest. Then we parse the retrieved mp3 binary.
    *
    * @param text text that need to be converted
    * @param lang language locale of text

@@ -56,13 +56,7 @@ public class ParaTransContent {
 
         String destLocale = LocaleLookup.getLocale(destIndex);
 
-        String translated = GoogleService.getTranslatedString(textInput, srcLocale, destLocale);
-        byte[] toBytes = translated.getBytes();
-        translated = new String(toBytes, StandardCharsets.UTF_8);
-
-        destinationField.setText(translated);
-
-        // translates in another thread
+        // Translates in another thread
         Task<Void> task =
             new Task<Void>() {
               @Override

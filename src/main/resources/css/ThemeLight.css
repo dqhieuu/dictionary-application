@@ -179,6 +179,6 @@
     -fx-background-image:  url("/images/flag_us.png");
 }
 
-.translate-para-button {
+.translate-para-button, .clear-temp-btn, .dict-editor .save-word-btn {
     -fx-background-color: #3bebad;
 }

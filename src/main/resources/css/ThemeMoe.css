@@ -1,3 +1,160 @@
-.test {
-    color:pink;
+.dict-primary-container {
+    -fx-background-image: url(/images/PrismaBg.jpg);
+    -fx-background-size: stretch;
+}
+
+.rounded-corners.dict-primary-container {
+    -fx-background-image: url(/images/PrismaBg-border.PNG);
+}
+
+.dict-top-bar {
+    -fx-background-color: linear-gradient(rgb(255, 77, 190), rgba(255, 255, 255, 0.3)) !important;
+
+
+}
+
+.dict-left-container {
+    -fx-background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.definition-pane, .dict-man-theme, .para-trans-theme, .setting-theme {
+    -fx-background-color: rgba(255, 255, 255, 0.6) !important;
+    -fx-background-radius: 0 0 15 0;
+}
+
+.definition-box, .definition-pane > .viewport {
+    -fx-background-color: transparent !important;
+}
+
+.definition-box .text {
+    -fx-effect: dropshadow(gaussian, #ffffff, 7, 0.8, 0, 0);
+}
+
+.text, .dict-man-theme .table-row-cell:selected .jfx-combo-box .text {
+    -fx-fill: #ff52a9;
+}
+
+.jfx-slider > .animated-thumb, .jfx-slider > .thumb, .jfx-slider > .thumb {
+    -fx-background-color: #ff52a9;
+}
+
+.jfx-toggle-button {
+    -jfx-toggle-color: #ff52a9;
+}
+
+.jfx-slider > .colored-track {
+    -fx-background-color: #c43e82;
+}
+
+
+.active-btn {
+    -fx-background-color: #ff87b4;
+}
+
+.active-btn .text {
+    -fx-fill: white;
+}
+
+.list-view {
+    -fx-padding: 0;
+}
+
+.dict-left-menu-item:hover, .active-btn:hover {
+    -fx-background-color: #d2acbb;
+}
+
+.list-cell:odd:selected, .list-cell:selected, .jfx-combo-box .list-cell:hover, .jfx-combo-box .list-cell:selected {
+    -fx-background-color: #ff398e;
+}
+
+.list-cell:selected .text, .table-view .jfx-combo-box .list-cell:hover .text,
+.table-view .jfx-combo-box .list-cell:selected .text, .jfx-combo-box .list-cell:hover .text,
+.dict-man-theme .table-view .column-header .text, .dict-man-theme .table-row-cell:selected .text,
+.translate-para-button .text, .clear-temp-btn .text, .save-word-btn .text {
+    -fx-fill: white;
+}
+
+.list-cell:odd {
+    -fx-background-color: #fff1fd;
+}
+
+.jfx-combo-box .list-cell {
+    -fx-background-color: transparent;
+}
+
+.dict-left-menu-icon, .dict-title-bar-icon {
+    -fx-fill: #750941;
+}
+
+.dict-management-ui .button {
+    -fx-background-color: rgba(200, 200, 200, 0.5);
+}
+
+.dict-management-ui .button:hover {
+    -fx-background-color: rgba(200, 200, 200, 0.8);
+}
+
+.dict-management-ui .button .text {
+    -fx-fill: black;
+}
+
+
+.dict-man-theme .table-view .column-header, .dict-man-theme .table-view .filler {
+    -fx-background-color: #ff5188;
+}
+
+.dict-man-theme .table-row-cell:selected {
+    -fx-background-color: #ec79a0;
+}
+
+.jfx-combo-box {
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+}
+
+
+.para-trans-theme .text-area {
+    -fx-focus-color: transparent;
+    -fx-text-box-border: transparent;
+    -fx-background-radius: 15;
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+}
+
+.para-trans-theme .text-area.dest {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+}
+
+.para-trans-theme .text-area .scroll-pane .viewport, .para-trans-theme .text-area .scroll-pane,
+.para-trans-theme .content {
+    -fx-background-color: transparent;
+}
+
+.translate-para-button, .clear-temp-btn, .dict-editor .fa-btn, .dict-editor .save-word-btn {
+    -fx-background-color: #eb3b87;
+}
+
+.dict-editor .fa-btn {
+    -fx-fill: #eb3b87;
+}
+
+.dict-editor .fa-btn:hover {
+    -fx-fill: #b02d63;
+}
+
+.translate-para-button:hover, .clear-temp-btn:hover, .dict-editor .save-word-btn:hover {
+    -fx-background-color: #b02d63;
+}
+
+.dict-editor .save-word-btn {
+    -fx-text-fill: white;
+}
+
+.dict-man-theme .table-view {
+    -fx-opacity: 0.8;
+}
+
+.source-tts, .destination-tts {
+    -fx-fill: #9d9d9d;
+}
+.tts-button:hover, .source-tts:hover, .destination-tts:hover {
+    -fx-fill: #eb3b87!important;
 }

@@ -20,7 +20,7 @@ public class DatabaseConnection {
   private static void connect(String location)
       throws SQLException, ClassNotFoundException, IOException {
 
-    // necessary for jar build
+    // Necessary for jar build. Returns class object from sqlite-jdbc interface
     Class.forName("org.sqlite.JDBC");
 
     SQLiteConfig config = new SQLiteConfig();

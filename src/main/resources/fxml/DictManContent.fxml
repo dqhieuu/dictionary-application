@@ -9,14 +9,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="498.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uet.hieuhadict.DictManContentController" styleClass="dict-man-theme">
+<BorderPane prefHeight="498.0" prefWidth="824.0" styleClass="dict-man-theme" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uet.hieuhadict.DictManContentController">
     <top>
-        <Label text="%dictList" BorderPane.alignment="CENTER" styleClass="dict-man-text"/>
+        <Label styleClass="dict-man-text" text="%dictList" BorderPane.alignment="CENTER" />
     </top>
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
-         <TableView fx:id="dictTable" editable="true" prefHeight="477.0" prefWidth="585.0" />
-         <VBox spacing="15.0"  prefHeight="200.0" prefWidth="100.0" styleClass="dict-management-ui">
+         <TableView fx:id="dictTable" editable="true" maxHeight="498.0" prefHeight="477.0" prefWidth="585.0" />
+         <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0" styleClass="dict-management-ui">
             <Button mnemonicParsing="false" onAction="#addItem" prefWidth="100.0" text="%add">
                <graphic>
                   <FontAwesomeIconView glyphName="PLUS_SQUARE_ALT" size="25" />

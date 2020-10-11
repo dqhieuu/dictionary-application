@@ -3,7 +3,7 @@ package edu.uet.hieuhadict.utils;
 import java.util.Arrays;
 import java.util.List;
 
-/** Locale from Google site */
+/** Locale from Google site. Vietnamese translation is from our group. */
 public class LocaleLookup {
   private static final List<String> locales =
       Arrays.asList(
