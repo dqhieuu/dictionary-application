@@ -57,76 +57,6 @@
     -fx-background-radius: 0 0 0 15;
 }
 
-.scroll-bar:horizontal .track,
-.scroll-bar:vertical .track {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-background-radius: 5;
-    -fx-border-radius: 2.0em;
-}
-
-
-.scroll-bar:horizontal .increment-button,
-.scroll-bar:horizontal .decrement-button {
-    -fx-background-color: transparent;
-    -fx-background-radius: 0.0em;
-    -fx-padding: 0.0 0.0 10.0 0.0;
-
-}
-
-.scroll-bar:vertical .increment-button,
-.scroll-bar:vertical .decrement-button {
-    -fx-background-color: transparent;
-    -fx-background-radius: 0.0em;
-    -fx-padding: 0.0 10.0 0.0 0.0;
-
-}
-
-.scroll-bar .increment-arrow,
-.scroll-bar .decrement-arrow {
-    -fx-shape: " ";
-    -fx-padding: 0.15em 0.0;
-}
-
-.scroll-bar:vertical .increment-arrow,
-.scroll-bar:vertical .decrement-arrow {
-    -fx-shape: " ";
-    -fx-padding: 1 0.15em;
-}
-
-.scroll-bar:horizontal .thumb,
-.scroll-bar:vertical .thumb {
-    -fx-background-color: derive(black, 90.0%);
-    -fx-background-insets: 2.0, 0.0, 0.0;
-    -fx-background-radius: 5;
-}
-
-.scroll-bar:horizontal .thumb:hover,
-.scroll-bar:vertical .thumb:hover {
-    -fx-background-color: derive(#4D4C4F, 10.0%);
-    -fx-background-insets: 2.0, 0.0, 0.0;
-    -fx-background-radius: 5;
-}
-
-.scroll-bar:vertical {
-    -fx-pref-width: 10;
-    -fx-padding: 0;
-}
-
-.scroll-bar:horizontal {
-    -fx-pref-height: 10;
-    -fx-padding: 0;
-}
-
-.scroll-bar:vertical .track-background,
-.scroll-bar:horizontal .track-background {
-    -fx-opacity: 0;
-}
-
-.scroll-bar {
-    -fx-background-color: transparent;
-}
-
 .word-label {
     -fx-font-size: 23;
     -fx-padding: 0 0 0 0;
@@ -142,6 +72,7 @@
     -fx-font-size: 18;
     -fx-font-weight: bold;
     -fx-padding: 0 0 10 10;
+    -fx-text-fill: #5b400c;
 }
 
 .label-explanation, .label-idiom {
@@ -167,11 +98,11 @@
     -fx-background-radius: 0 0 15 0;
 }
 
-.tts-button {
+.tts-button, .source-tts, .destination-tts, .switch-language {
     -fx-fill: #9d9d9d;
 }
 
-.tts-button:hover {
+.tts-button:hover, .source-tts:hover, .destination-tts:hover, .switch-language:hover {
     -fx-fill: #000000;
 }
 

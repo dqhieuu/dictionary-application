@@ -8,7 +8,7 @@
 }
 
 .dict-top-bar {
-    -fx-background-color: linear-gradient(rgb(255, 77, 190), rgba(255, 255, 255, 0.3)) !important;
+    -fx-background-color: linear-gradient(rgb(255, 77, 190), rgba(255, 255, 255, 0.5)) !important;
 }
 
 .dict-left-container {
@@ -53,12 +53,8 @@
     -fx-fill: white;
 }
 
-.list-view {
-    -fx-padding: 0;
-}
-
 .dict-left-menu-item:hover, .active-btn:hover {
-    -fx-background-color: #d2acbb;
+    -fx-background-color: #ffc0d9;
 }
 
 .list-cell:odd:selected, .list-cell:selected, .jfx-combo-box .list-cell:hover, .jfx-combo-box .list-cell:selected {
@@ -129,7 +125,7 @@
     -fx-background-color: #eb3b87;
 }
 
-.dict-editor .fa-btn {
+.dict-editor .fa-btn, .switch-language:hover {
     -fx-fill: #eb3b87;
 }
 
@@ -152,6 +148,7 @@
 .source-tts, .destination-tts {
     -fx-fill: #9d9d9d;
 }
+
 .tts-button:hover, .source-tts:hover, .destination-tts:hover {
-    -fx-fill: #eb3b87!important;
+    -fx-fill: #eb3b87 !important;
 }

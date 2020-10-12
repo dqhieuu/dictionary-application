@@ -26,5 +26,4 @@ public interface WordDao {
   boolean updateDictionary(Dictionary dictionary) throws SQLException;
 
   boolean deleteDictionary(Dictionary dictionary) throws SQLException;
-
 }

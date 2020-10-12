@@ -14,7 +14,7 @@
 
 <BorderPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uet.hieuhadict.DictionaryController">
    <left>
-      <AnchorPane fx:id="leftMenuContainer" onMouseEntered="#setLeftMenuSizeOnMouseEnter" onMouseExited="#setLeftMenuSizeOnMouseLeave" styleClass="dict-left-container" BorderPane.alignment="CENTER">
+      <AnchorPane onMouseEntered="#setLeftMenuSizeOnMouseEnter" onMouseExited="#setLeftMenuSizeOnMouseLeave" styleClass="dict-left-container" BorderPane.alignment="CENTER">
          <VBox fx:id="leftMenuVBox" prefHeight="300.0" prefWidth="50.0" AnchorPane.topAnchor="0.0">
             <StackPane alignment="CENTER_LEFT" styleClass="dict-left-menu-item">
                <JFXButton fx:id="menuButtonLookup" minWidth="0.0" onAction="#loadLookupContent" prefHeight="50.0" prefWidth="300.0" styleClass="dict-left-menu-button" text="%dictionary" />

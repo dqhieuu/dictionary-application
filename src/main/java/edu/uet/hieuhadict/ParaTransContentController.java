@@ -14,7 +14,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
-public class ParaTransContent {
+public class ParaTransContentController {
   @FXML private JFXComboBox<String> sourceLanguage;
 
   @FXML private JFXComboBox<String> destinationLanguage;
@@ -41,7 +41,7 @@ public class ParaTransContent {
   }
 
   @FXML
-  private void translateParagraph() throws Exception {
+  private void translateParagraph() {
     int srcIndex = sourceLanguage.getSelectionModel().getSelectedIndex();
     int destIndex = destinationLanguage.getSelectionModel().getSelectedIndex();
     if (srcIndex != -1 && destIndex != -1) {
@@ -76,7 +76,7 @@ public class ParaTransContent {
   }
 
   @FXML
-  private void sourceTTS() throws Exception {
+  private void sourceTTS() {
     int localeIndex = sourceLanguage.getSelectionModel().getSelectedIndex();
     if (localeIndex != -1 && localeIndex < LocaleLookup.size()) {
       String textInput = sourceField.getText().trim();
@@ -87,7 +87,7 @@ public class ParaTransContent {
   }
 
   @FXML
-  private void destinationTTS() throws Exception {
+  private void destinationTTS() {
     int localeIndex = destinationLanguage.getSelectionModel().getSelectedIndex();
     if (localeIndex != -1) {
       String textInput = destinationField.getText().trim();

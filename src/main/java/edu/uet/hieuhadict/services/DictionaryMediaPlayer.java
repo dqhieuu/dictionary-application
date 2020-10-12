@@ -5,7 +5,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 
 /** A static music player class that encapsulates the long procedure to play a music file. */
 public class DictionaryMediaPlayer {
@@ -18,9 +17,8 @@ public class DictionaryMediaPlayer {
    *
    * @param content text to speak
    * @param locale language in which text is spoken
-   * @throws Exception exception
    */
-  public static void playTTS(String content, String locale) throws Exception {
+  public static void playTTS(String content, String locale) {
     // Plays media on another thread to prevent blocking
     Task<Void> task =
         new Task<Void>() {

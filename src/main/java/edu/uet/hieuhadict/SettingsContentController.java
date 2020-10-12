@@ -4,9 +4,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXToggleButton;
 import edu.uet.hieuhadict.dao.DatabaseConnection;
-import edu.uet.hieuhadict.services.GoogleService;
 import edu.uet.hieuhadict.services.UserPreferences;
-import edu.uet.hieuhadict.utils.LocaleLookup;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -17,8 +15,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -56,13 +52,9 @@ public class SettingsContentController {
     prefs.putDouble(UserPreferences.VOLUME, volumeSlider.getValue());
   }
 
-  /**
-   * Optimizes database and clear tts temp files.
-   *
-   * @throws SQLException exception
-   */
+  /** Optimizes database and clear tts temp files. */
   @FXML
-  private void clearCache() throws SQLException {
+  private void clearCache() {
     // clears cache in another thread
     Task<Void> task =
         new Task<Void>() {
